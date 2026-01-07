@@ -1,0 +1,34 @@
+export default function ContactPage() {
+    return (
+        <div className="min-h-screen bg-white py-20">
+            <div className="container mx-auto px-4 max-w-3xl">
+                <h1 className="text-5xl font-black mb-8 text-gray-900 tracking-tight">Contact Us</h1>
+                <p className="text-xl text-gray-600 mb-12">
+                    Have questions or feedback? We&apos;d love to hear from you.
+                </p>
+
+                <div className="glass-card p-10 rounded-3xl border-gray-200">
+                    <form className="space-y-6">
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm font-semibold mb-2">Name</label>
+                                <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4" placeholder="John Doe" />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-semibold mb-2">Email</label>
+                                <input type="email" className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4" placeholder="john@example.com" />
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-semibold mb-2">Message</label>
+                            <textarea rows={5} className="w-full bg-gray-50 border border-gray-200 rounded-xl p-4" placeholder="How can we help?"></textarea>
+                        </div>
+                        <button className="w-full btn-gradient py-5 rounded-2xl font-bold text-lg shadow-glow transition-all hover:scale-[1.02]">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    );
+}

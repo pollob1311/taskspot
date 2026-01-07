@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode colors - Refined Crisp Theme */
+    --primary: #6366f1;
+    --secondary: #ec4899;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --background: #f0f7f4;  /* Crisp Light Green Mix */
+    --card: #ffffff;
+    --text: #0f172a;        /* High Contrast Slate 900 */
+    --muted: #64748b;
+  }
+
+  .dark {
+    /* Dark mode colors - Antigravity Theme */
+    --primary: #8b5cf6;
+    --secondary: #3b82f6;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
+    --background: #ffffff;  /* White background as requested */
+    --card: #f8fafc;        /* Slate 50 */
+    --text: #0b1121;        /* Dark text for contrast */
+    --muted: #64748b;       /* Slate 500 */
+  }
+
+  * {
+    @apply border-gray-200;
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--text)];
+    font-family: 'Inter', system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+
+  /* Glassmorphism card - Adapted for Light Mode */
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/70 border border-gray-200 shadow-lg;
+  }
+
+  /* Gradient button */
+  .btn-gradient {
+    @apply bg-gradient-to-r from-neon-purple to-neon-blue text-white font-semibold px-6 py-3 rounded-lg;
+    @apply hover:scale-105 transition-transform duration-200;
+    @apply shadow-neon-purple hover:shadow-glow;
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-300;
+    @apply hover:scale-105 hover:border-neon-purple/50;
+  }
+
+  /* Animated counter */
+  .counter {
+    @apply font-mono font-bold text-2xl;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Dot animation */
+  .dot-cycle {
+    animation: colorCycle 3s linear infinite;
+    box-shadow: 0 0 10px currentColor; 
+  }
+}
+
+@layer utilities {
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent;
+  }
+}
+
+/* Custom animations */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes colorCycle {
+  0% { background-color: #7c3aed !important; box-shadow: 0 0 20px rgba(124, 58, 237, 0.5); transform: scale(1); }    /* Violet 600 */
+  33% { background-color: #2563eb !important; box-shadow: 0 0 20px rgba(37, 99, 235, 0.5); transform: scale(1.15); }   /* Blue 600 */
+  66% { background-color: #0891b2 !important; box-shadow: 0 0 20px rgba(8, 145, 178, 0.5); transform: scale(1); }      /* Cyan 600 */
+  100% { background-color: #7c3aed !important; box-shadow: 0 0 20px rgba(124, 58, 237, 0.5); transform: scale(1); }  /* Back to Violet */
+}
+
+.shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.05) 50%,
+      transparent 100%);
+  background-size: 1000px 100%;
+}

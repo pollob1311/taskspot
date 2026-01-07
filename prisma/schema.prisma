@@ -1,0 +1,259 @@
+// This is your Prisma schema file
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  BANNED
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum OfferStatus {
+  STARTED
+  PENDING
+  APPROVED
+  REJECTED
+  REVERSED
+}
+
+enum WithdrawalStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  REJECTED
+}
+
+enum TransactionType {
+  EARN
+  SPEND
+  BONUS
+  REFERRAL
+  ADJUSTMENT
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum OfferDifficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model User {
+  id                String         @id @default(uuid())
+  email             String         @unique
+  phone             String?
+  passwordHash      String
+  firstName         String?
+  lastName          String?
+  countryCode       String?        // ISO 3166-1 alpha-2
+  avatarUrl         String?
+  emailVerified     Boolean        @default(false)
+  phoneVerified     Boolean        @default(false)
+  kycVerified       Boolean        @default(false)
+  status            UserStatus     @default(ACTIVE)
+  role              UserRole       @default(USER)
+  fraudScore        Int            @default(0)
+  totalEarned       Decimal        @default(0) @db.Decimal(10, 2)
+  availableBalance  Decimal        @default(0) @db.Decimal(10, 2)
+  pendingBalance    Decimal        @default(0) @db.Decimal(10, 2)
+  deviceFingerprint String?
+  referralCode      String?        @unique
+  referredById      String?
+  createdAt         DateTime       @default(now())
+  lastLoginAt       DateTime?
+  
+  userOffers        UserOffer[]
+  transactions      Transaction[]
+  withdrawals       Withdrawal[]
+  referrals         Referral[]     @relation("Referrer")
+  referee           Referral?      @relation("Referee")
+  adViews           AdView[]
+  fraudLogs         FraudLog[]
+  
+  @@index([email])
+  @@index([referralCode])
+  @@index([fraudScore])
+}
+
+model Offer {
+  id                  String           @id @default(uuid())
+  cpaNetwork          String           // 'cpalead', 'cpagrip', etc.
+  externalOfferId     String
+  title               String
+  description         String?          @db.Text
+  category            String?
+  payout              Decimal          @db.Decimal(10, 4) // What CPA pays you
+  userReward          Decimal          @db.Decimal(10, 4) // 40% of payout
+  rewardPoints        Int              // Converted to points
+  countries           String[]         // ['US', 'UK', 'CA']
+  deviceTypes         String[]         // ['mobile', 'desktop', 'tablet']
+  thumbnailUrl        String?
+  difficulty          OfferDifficulty  @default(MEDIUM)
+  avgCompletionTime   Int?             // in minutes
+  conversionRate      Decimal?         @db.Decimal(5, 2) // percentage
+  isActive            Boolean          @default(true)
+  isFeatured          Boolean          @default(false)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  
+  userOffers          UserOffer[]
+  
+  @@unique([cpaNetwork, externalOfferId])
+  @@index([isActive])
+  @@index([isFeatured])
+  @@index([category])
+}
+
+model UserOffer {
+  id                String        @id @default(uuid())
+  userId            String
+  offerId           String
+  status            OfferStatus   @default(STARTED)
+  rewardPoints      Int?
+  ipAddress         String?
+  deviceFingerprint String?
+  transactionId     String?       @unique // From CPA postback
+  startedAt         DateTime      @default(now())
+  completedAt       DateTime?
+  approvedAt        DateTime?
+  
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  offer             Offer         @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, offerId]) // Prevent duplicate completions
+  @@index([userId])
+  @@index([status])
+  @@index([transactionId])
+}
+
+model Transaction {
+  id          String            @id @default(uuid())
+  userId      String
+  type        TransactionType
+  amount      Decimal           @db.Decimal(10, 2)
+  points      Int
+  description String?           @db.Text
+  status      TransactionStatus @default(PENDING)
+  metadata    Json?
+  createdAt   DateTime          @default(now())
+  
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  offerId     String?
+  
+  @@index([userId])
+  @@index([type])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Withdrawal {
+  id             String           @id @default(uuid())
+  userId         String
+  method         String           // 'paypal', 'crypto', 'bank', etc.
+  amount         Decimal          @db.Decimal(10, 2)
+  pointsDeducted Int
+  status         WithdrawalStatus @default(PENDING)
+  paymentDetails Json             // Email, wallet address, etc.
+  transactionHash String?         // For blockchain payments
+  adminNotes     String?          @db.Text
+  requestedAt    DateTime         @default(now())
+  processedAt    DateTime?
+  
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([status])
+  @@index([requestedAt])
+}
+
+model Referral {
+  id               String   @id @default(uuid())
+  referrerId       String
+  refereeId        String   @unique
+  totalEarned      Decimal  @default(0) @db.Decimal(10, 2) // Referee's earnings
+  commissionEarned Decimal  @default(0) @db.Decimal(10, 2) // Referrer's commission
+  createdAt        DateTime @default(now())
+  
+  referrer         User     @relation("Referrer", fields: [referrerId], references: [id], onDelete: Cascade)
+  referee          User     @relation("Referee", fields: [refereeId], references: [id], onDelete: Cascade)
+  
+  @@index([referrerId])
+}
+
+model AdView {
+  id           String   @id @default(uuid())
+  userId       String
+  adType       String   // 'banner', 'video', 'native'
+  adNetwork    String
+  pointsEarned Int
+  ipAddress    String?
+  createdAt    DateTime @default(now())
+  
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model FraudLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  eventType  String
+  severity   String   // 'low', 'medium', 'high', 'critical'
+  details    Json
+  ipAddress  String?
+  userAgent  String?  @db.Text
+  createdAt  DateTime @default(now())
+  
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  @@index([userId])
+  @@index([severity])
+  @@index([createdAt])
+}
+
+model SystemSetting {
+  key         String   @id
+  value       String   @db.Text
+  description String?  @db.Text
+  isPublic    Boolean  @default(false)
+  updatedAt   DateTime @updatedAt
+
+  @@index([key])
+}
+
+model PostbackLog {
+  id           String   @id @default(uuid())
+  network      String
+  subId        String?  // Mapping to UserOffer.id
+  userId       String?
+  amount       Decimal? @db.Decimal(10, 4)
+  payout       Decimal? @db.Decimal(10, 4)
+  status       String   // 'SUCCESS', 'FAILED', 'PENDING'
+  rawParams    Json
+  errorMessage String?  @db.Text
+  ipAddress    String?
+  createdAt    DateTime @default(now())
+
+  @@index([subId])
+  @@index([userId])
+  @@index([createdAt])
+}
