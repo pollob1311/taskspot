@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BackgroundParticles } from '@/components/BackgroundParticles';
+import { COUNTRIES } from '@/lib/countries';
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -13,6 +14,7 @@ export default function RegisterPage() {
         password: '',
         firstName: '',
         lastName: '',
+        countryCode: '',
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -114,6 +116,24 @@ export default function RegisterPage() {
                         </div>
                     </div>
 
+                    <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
+                            Country *
+                        </label>
+                        <select
+                            required
+                            value={formData.countryCode}
+                            onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                            className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:bg-white transition-all"
+                        >
+                            <option value="" disabled>Select your country</option>
+                            {COUNTRIES.map((country) => (
+                                <option key={country.code} value={country.code}>
+                                    {country.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
                     <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-2">

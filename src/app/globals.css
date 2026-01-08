@@ -111,11 +111,30 @@
   100% { background-color: #7c3aed !important; box-shadow: 0 0 20px rgba(124, 58, 237, 0.5); transform: scale(1); }  /* Back to Violet */
 }
 
-.shimmer {
-  animation: shimmer 2s infinite linear;
-  background: linear-gradient(to right,
-      transparent 0%,
-      rgba(0, 0, 0, 0.05) 50%,
-      transparent 100%);
-  background-size: 1000px 100%;
+@keyframes reflect {
+  0% { transform: translateX(-150%) skewX(-25deg); }
+  20% { transform: translateX(250%) skewX(-25deg); }
+  100% { transform: translateX(250%) skewX(-25deg); }
+}
+
+.btn-reflect {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-reflect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  animation: reflect 3s ease-in-out infinite;
+  pointer-events: none;
 }

@@ -71,6 +71,35 @@ export default function AdminOffersPage() {
         }
     };
 
+    const [showSyncModal, setShowSyncModal] = useState(false);
+    const [feedUrl, setFeedUrl] = useState('');
+    const [syncing, setSyncing] = useState(false);
+
+    const handleSync = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSyncing(true);
+        try {
+            const res = await fetch('/api/offers/sync', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: feedUrl }),
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                alert(data.message);
+                setShowSyncModal(false);
+                fetchOffers();
+            } else {
+                alert(data.error || 'Sync failed');
+            }
+        } catch (error) {
+            alert('Error connecting to server');
+        } finally {
+            setSyncing(false);
+        }
+    };
+
     if (loading) return <div className="p-12 text-center">Loading...</div>;
 
     return (
@@ -83,9 +112,17 @@ export default function AdminOffersPage() {
                         </Link>
                         <h1 className="text-4xl font-black">Manage Offers</h1>
                     </div>
-                    <Link href="/dashboard/admin/offers/new" className="px-5 py-3 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition shadow-lg shadow-purple-200">
-                        + Add New Offer
-                    </Link>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={() => setShowSyncModal(true)}
+                            className="px-5 py-3 bg-white text-slate-700 border border-slate-200 rounded-xl font-bold hover:bg-slate-50 transition shadow-sm"
+                        >
+                            🔄 Sync Offers
+                        </button>
+                        <Link href="/dashboard/admin/offers/new" className="px-5 py-3 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700 transition shadow-lg shadow-purple-200">
+                            + Add New Offer
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
@@ -122,8 +159,8 @@ export default function AdminOffersPage() {
                                         <button
                                             onClick={() => handleToggleStatus(offer.id, offer.isActive)}
                                             className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wide border ${offer.isActive
-                                                    ? 'bg-green-50 text-green-600 border-green-200'
-                                                    : 'bg-slate-50 text-slate-400 border-slate-200'
+                                                ? 'bg-green-50 text-green-600 border-green-200'
+                                                : 'bg-slate-50 text-slate-400 border-slate-200'
                                                 }`}
                                         >
                                             {offer.isActive ? 'Active' : 'Inactive'}
@@ -144,6 +181,48 @@ export default function AdminOffersPage() {
                     </table>
                 </div>
             </div>
+
+            {/* Sync Modal */}
+            {showSyncModal && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-slide-up">
+                        <h2 className="text-2xl font-bold mb-4">Sync External Offers</h2>
+                        <p className="text-slate-500 mb-6 text-sm">
+                            Enter the JSON feed URL from your CPA network (CPAGrip, CPALead, AdGate, etc.). The system will automatically map the offers.
+                        </p>
+                        <form onSubmit={handleSync}>
+                            <div className="mb-4">
+                                <label className="block text-sm font-semibold text-slate-700 mb-2">Feed URL</label>
+                                <input
+                                    type="url"
+                                    required
+                                    placeholder="https://www.cpagrip.com/common/offer_feed_json.php?..."
+                                    value={feedUrl}
+                                    onChange={(e) => setFeedUrl(e.target.value)}
+                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                />
+                            </div>
+                            <div className="flex justify-end gap-3">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowSyncModal(false)}
+                                    className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg transition"
+                                    disabled={syncing}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={syncing}
+                                    className="px-4 py-2 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 transition disabled:opacity-50"
+                                >
+                                    {syncing ? 'Syncing...' : 'Start Sync'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

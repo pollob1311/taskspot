@@ -43,15 +43,21 @@ export default function HomePage() {
                         <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 animate-slide-up" style={{ animationDelay: '0.4s' }}>
                             <a
                                 href="/register"
-                                className="btn-gradient px-10 py-5 text-xl rounded-xl shadow-glow transition-all hover:scale-105"
+                                className="btn-gradient btn-reflect px-10 py-5 text-2xl font-black rounded-xl shadow-glow transition-all hover:scale-105"
                             >
                                 Start Earning
                             </a>
                             <a
                                 href="#how-it-works"
-                                className="glass-card px-10 py-5 text-xl rounded-xl hover:bg-white transition-all border-gray-200 hover:border-neon-purple text-gray-800"
+                                className="glass-card px-10 py-5 text-xl rounded-xl hover:bg-white transition-all border-gray-200 hover:border-neon-purple text-gray-800 flex items-center justify-center font-semibold"
                             >
                                 How It Works
+                            </a>
+                            <a
+                                href="/register"
+                                className="inline-block bg-white text-neon-cyan font-bold px-10 py-5 rounded-xl hover:scale-105 transition-transform text-xl shadow-lg border border-cyan-100 flex items-center justify-center"
+                            >
+                                Sign Up Now - It&apos;s Free!
                             </a>
                         </div>
 
