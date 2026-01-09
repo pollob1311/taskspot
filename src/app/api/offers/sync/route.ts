@@ -71,10 +71,11 @@ export async function POST(req: Request) {
                     where: {
                         cpaNetwork_externalOfferId: {
                             cpaNetwork: network,
-                            externalOfferId: offerLink, // এখানে লিঙ্কটিই আইডি হিসেবে কাজ করবে
+                            externalOfferId: offerLink + "&tracking_id={user_id}",
                         }
                     },
                     update: {
+                        externalOfferId: offerLink + "&tracking_id={user_id}",
                         title: title.substring(0, 100),
                         description: description,
                         payout: payout,
@@ -86,7 +87,7 @@ export async function POST(req: Request) {
                     },
                     create: {
                         cpaNetwork: network,
-                        externalOfferId: offerLink,
+                        externalOfferId: offerLink + "&tracking_id={user_id}",
                         title: title.substring(0, 100),
                         description: description,
                         payout: payout,
