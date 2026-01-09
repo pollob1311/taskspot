@@ -17,7 +17,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'URL is required' }, { status: 400 });
         }
 
-        // Save URL for future convenience
+        // URL সেভ করে রাখা
         await prisma.systemSetting.upsert({
             where: { key: 'OFFER_FEED_URL' },
             create: {
@@ -26,12 +26,9 @@ export async function POST(req: Request) {
                 description: 'Last used offer feed URL',
                 isPublic: false,
             },
-            update: {
-                value: url,
-            },
+            update: { value: url },
         });
 
-        // Fetch the feed
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`Failed to fetch feed: ${response.statusText}`);
@@ -39,20 +36,15 @@ export async function POST(req: Request) {
 
         const data = await response.json();
 
-        // Normalize data: Handle array or object with 'offers' property
+        // CPAGrip এর ডেটা 'offers' প্রপার্টির ভেতরে থাকে
         let rawOffers = [];
-        if (Array.isArray(data)) {
-            rawOffers = data;
-        } else if (data.offers && Array.isArray(data.offers)) {
+        if (data.offers && Array.isArray(data.offers)) {
             rawOffers = data.offers;
+        } else if (Array.isArray(data)) {
+            rawOffers = data;
         } else {
-            // Try to find any array property that might contain offers
             const arrayProp = Object.values(data).find(val => Array.isArray(val));
-            if (arrayProp) {
-                rawOffers = arrayProp as any[];
-            } else {
-                throw new Error('Invalid feed format: Could not find offers array');
-            }
+            if (arrayProp) rawOffers = arrayProp as any[];
         }
 
         let syncedCount = 0;
@@ -60,75 +52,68 @@ export async function POST(req: Request) {
 
         for (const offer of rawOffers) {
             try {
-                // Map fields
-                // Handle various common field names
-                const externalId = String(offer.offer_id || offer.id || offer.offerid || '');
-                const title = offer.title || offer.name || offer.offer_name || 'Untitled Offer';
+                // CPAGrip Specific Mapping (এটিই সমস্যা ছিল)
+                const externalId = String(offer.offer_id || offer.id || '');
+                const title = offer.title || offer.name || 'Untitled Offer';
                 const description = offer.description || offer.desc || '';
-                const payout = parseFloat(offer.payout || offer.rate || offer.amount || offer.cpa || '0');
-                const link = offer.link || offer.tracking_url || offer.url || '';
-                const network = offer.network || 'external-feed'; // Heuristic
+                const payout = parseFloat(offer.payout || offer.rate || '0');
 
-                // Parse countries
-                let countries: string[] = [];
-                if (offer.countries) {
-                    if (Array.isArray(offer.countries)) {
-                        countries = offer.countries;
-                    } else if (typeof offer.countries === 'string') {
-                        countries = offer.countries.split(',').map((c: string) => c.trim().toUpperCase());
-                    }
-                } else if (offer.country) {
-                    countries = offer.country.split(',').map((c: string) => c.trim().toUpperCase());
-                }
+                // CPAGrip-এ লিঙ্ক থাকে 'offerlink' নামে
+                const link = offer.offerlink || offer.link || offer.tracking_url || '';
 
-                if (!externalId || !link) {
-                    // Skip invalid offers
-                    continue;
-                }
+                // CPAGrip-এ ছবি থাকে 'offerphoto' নামে
+                const thumbnail = offer.offerphoto || offer.thumbnail || offer.image || null;
 
-                // Calculate user reward (40% default)
+                const network = "CPAGrip"; // সরাসরি নাম দিয়ে দেওয়া ভালো
+
+                // লিঙ্ক না থাকলে অফার সেভ হবে না
+                if (!externalId || !link) continue;
+
+                // ইউজার রিওয়ার্ড হিসাব (৪০% রিওয়ার্ড)
                 const userReward = payout * 0.40;
                 const rewardPoints = Math.floor(userReward * 100);
+
+                // কান্ট্রি প্রসেসিং
+                let countries: string[] = [];
+                if (offer.countries && Array.isArray(offer.countries)) {
+                    countries = offer.countries;
+                } else if (offer.accepted_countries && typeof offer.accepted_countries === 'string') {
+                    countries = offer.accepted_countries.split(',').map((c: any) => c.trim().toUpperCase());
+                } else if (offer.country) {
+                    countries = [offer.country.toUpperCase()];
+                }
 
                 await prisma.offer.upsert({
                     where: {
                         cpaNetwork_externalOfferId: {
                             cpaNetwork: network,
-                            externalOfferId: externalId, // We use external ID + network as unique key
+                            externalOfferId: externalId,
                         }
                     },
                     update: {
-                        title: title.substring(0, 100), // Truncate if too long (optional safety)
-                        description: description,
-                        payout: payout,
-                        userReward: userReward,
-                        rewardPoints: rewardPoints,
-                        // We map the tracking link to externalOfferId? NO.
-                        // The user said: "Tracking URL: The system currently uses externalOfferId as the base tracking URL...
-                        // The sync process will map the feed's tracking link to this field."
-                        // Wait. If externalOfferId IS the tracking URL, then the composite key above might be too long/messy if the URL is long.
-                        // However, the schema has `externalOfferId String`. Ideally this should be a short ID. 
-                        // But if the user *explicitly* requested "externalOfferId: Maps to the tracking link", I must follow that.
-                        // BUT, if I use the full URL as ID, looking it up later might be tricky if params change. 
-                        // Let's re-read: "The system currently uses externalOfferId as the base tracking URL (based on start/route.ts usage). The sync process will map the feed's tracking link to this field."
-                        // OK, so `externalOfferId` = `link`.
-                        externalOfferId: link,
-                        countries: countries,
-                        thumbnailUrl: offer.thumbnail || offer.image || offer.picture || null,
-                        isActive: true, // Auto-activate synced offers? Maybe safer to default true as per "update local database with new... offers"
-                    },
-                    create: {
-                        cpaNetwork: network,
-                        externalOfferId: link, // As per instruction
                         title: title.substring(0, 100),
                         description: description,
                         payout: payout,
                         userReward: userReward,
                         rewardPoints: rewardPoints,
+                        link: link + "&subid={user_id}", // ট্র্যাকিং প্যারামিটার যোগ করা
+                        countries: countries,
+                        thumbnailUrl: thumbnail,
+                        isActive: true,
+                    },
+                    create: {
+                        cpaNetwork: network,
+                        externalOfferId: externalId,
+                        title: title.substring(0, 100),
+                        description: description,
+                        payout: payout,
+                        userReward: userReward,
+                        rewardPoints: rewardPoints,
+                        link: link + "&subid={user_id}",
                         countries: countries,
                         category: offer.category || 'General',
-                        deviceTypes: ['desktop', 'mobile', 'tablet'], // Default to all
-                        thumbnailUrl: offer.thumbnail || offer.image || offer.picture || null,
+                        deviceTypes: ['desktop', 'mobile', 'tablet'],
+                        thumbnailUrl: thumbnail,
                         isActive: true,
                     }
                 });
@@ -143,15 +128,11 @@ export async function POST(req: Request) {
         return NextResponse.json({
             success: true,
             synced: syncedCount,
-            errors: errorCount,
-            message: `Successfully synced ${syncedCount} offers${errorCount > 0 ? ` with ${errorCount} errors` : ''}.`
+            message: `Successfully synced ${syncedCount} offers from CPAGrip.`
         });
 
     } catch (error: any) {
         console.error('Sync error:', error);
-        return NextResponse.json(
-            { error: error.message || 'Internal server error' },
-            { status: 500 }
-        );
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
