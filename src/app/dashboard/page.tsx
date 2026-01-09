@@ -13,7 +13,7 @@ interface Offer {
     rewardPoints: number;
     userReward: number;
     isCompleted: boolean;
-    thumbnailUrl?: string | null; // ডাটাবেস থেকে ছবি আনার জন্য
+    thumbnailUrl?: string | null;
 }
 
 export default function DashboardPage() {
@@ -158,7 +158,9 @@ export default function DashboardPage() {
                     <h2 className="text-4xl font-black text-slate-900 mb-3 tracking-tight">
                         Welcome back, <span className="text-indigo-600">{session?.user?.name || 'User'}</span>! 👋
                     </h2>
-                    <p className="text-lg text-slate-500 font-medium italic opacity-70">"Quality is not an act, it is a habit." — Here&apos;s your overview</p>
+                    <p className="text-lg text-slate-500 font-medium italic opacity-70">
+                        &quot;Quality is not an act, it is a habit.&quot; — Here&apos;s your overview
+                    </p>
                 </div>
 
                 <div className="mb-12">
@@ -174,7 +176,6 @@ export default function DashboardPage() {
                             {offers.map((offer) => (
                                 <div key={offer.id} className="glass-card p-6 rounded-2xl card-hover border border-white/50 shadow-sm relative overflow-hidden group">
                                     <div className="flex justify-between items-start mb-4">
-                                        {/* এটিই ছবির নতুন কোড */}
                                         <div className="relative w-14 h-14 overflow-hidden rounded-xl border border-white/40 shadow-sm flex-shrink-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10">
                                             {offer.thumbnailUrl ? (
                                                 <Image src={offer.thumbnailUrl} alt={offer.title} fill className="object-cover" unoptimized />
@@ -188,7 +189,7 @@ export default function DashboardPage() {
                                     </div>
                                     <h4 className="font-bold text-lg mb-2 line-clamp-1">{offer.title}</h4>
                                     <p className="text-xs text-slate-500 mb-5 line-clamp-2">{offer.description}</p>
-                                    <Link href={`/dashboard/offers?id=${offer.id}`} className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm block text-center hover:bg-slate-800">Start Earning</Link>
+                                    <Link href={`/dashboard/offers?id=${offer.id}`} className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm block text-center hover:bg-slate-800 transition-all transform hover:scale-[1.02] active:scale-[0.98]">Start Earning</Link>
                                 </div>
                             ))}
                         </div>
