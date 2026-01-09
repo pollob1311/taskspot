@@ -1,11 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['localhost'],
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: '**',
+                hostname: 'www.cpagrip.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'static.cpagrip.com',
+            },
+            {
+                protocol: 'http',
+                hostname: 'www.cpagrip.com',
             },
         ],
     },
