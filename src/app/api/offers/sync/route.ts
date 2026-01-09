@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { prisma } from '@/lib/db'; // আপনার প্রজেক্টের পাথ অনুযায়ী
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
@@ -30,64 +30,48 @@ export async function POST(req: Request) {
         });
 
         const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch feed: ${response.statusText}`);
-        }
-
         const data = await response.json();
 
-        // CPAGrip এর ডেটা 'offers' প্রপার্টির ভেতরে থাকে
         let rawOffers = [];
         if (data.offers && Array.isArray(data.offers)) {
             rawOffers = data.offers;
         } else if (Array.isArray(data)) {
             rawOffers = data;
-        } else {
-            const arrayProp = Object.values(data).find(val => Array.isArray(val));
-            if (arrayProp) rawOffers = arrayProp as any[];
         }
 
         let syncedCount = 0;
-        let errorCount = 0;
 
         for (const offer of rawOffers) {
             try {
-                // CPAGrip Specific Mapping (এটিই সমস্যা ছিল)
-                const externalId = String(offer.offer_id || offer.id || '');
-                const title = offer.title || offer.name || 'Untitled Offer';
-                const description = offer.description || offer.desc || '';
-                const payout = parseFloat(offer.payout || offer.rate || '0');
+                const title = offer.title || 'Untitled Offer';
+                const description = offer.description || '';
+                const payout = parseFloat(offer.payout || '0');
 
-                // CPAGrip-এ লিঙ্ক থাকে 'offerlink' নামে
-                const link = offer.offerlink || offer.link || offer.tracking_url || '';
+                // CPAGrip লিঙ্ক এবং ছবি ম্যাপিং
+                const offerLink = offer.offerlink || offer.link || '';
+                const thumbnail = offer.offerphoto || offer.image_url || null;
+                const network = "CPAGrip";
 
-                // CPAGrip-এ ছবি থাকে 'offerphoto' নামে
-                const thumbnail = offer.offerphoto || offer.thumbnail || offer.image || null;
+                if (!offerLink) continue;
 
-                const network = "CPAGrip"; // সরাসরি নাম দিয়ে দেওয়া ভালো
-
-                // লিঙ্ক না থাকলে অফার সেভ হবে না
-                if (!externalId || !link) continue;
-
-                // ইউজার রিওয়ার্ড হিসাব (৪০% রিওয়ার্ড)
+                // রিওয়ার্ড ক্যালকুলেশন
                 const userReward = payout * 0.40;
                 const rewardPoints = Math.floor(userReward * 100);
 
-                // কান্ট্রি প্রসেসিং
+                // কান্ট্রি লিস্ট তৈরি
                 let countries: string[] = [];
                 if (offer.countries && Array.isArray(offer.countries)) {
                     countries = offer.countries;
-                } else if (offer.accepted_countries && typeof offer.accepted_countries === 'string') {
-                    countries = offer.accepted_countries.split(',').map((c: any) => c.trim().toUpperCase());
-                } else if (offer.country) {
-                    countries = [offer.country.toUpperCase()];
+                } else if (offer.accepted_countries) {
+                    countries = offer.accepted_countries.split(',').map((c: string) => c.trim().toUpperCase());
                 }
 
+                // আপনার স্কিমা অনুযায়ী upsert লজিক (link এর বদলে externalOfferId ব্যবহার করা হয়েছে)
                 await prisma.offer.upsert({
                     where: {
                         cpaNetwork_externalOfferId: {
                             cpaNetwork: network,
-                            externalOfferId: externalId,
+                            externalOfferId: offerLink, // এখানে লিঙ্কটিই আইডি হিসেবে কাজ করবে
                         }
                     },
                     update: {
@@ -96,22 +80,20 @@ export async function POST(req: Request) {
                         payout: payout,
                         userReward: userReward,
                         rewardPoints: rewardPoints,
-                        link: link + "&subid={user_id}", // ট্র্যাকিং প্যারামিটার যোগ করা
                         countries: countries,
                         thumbnailUrl: thumbnail,
                         isActive: true,
                     },
                     create: {
                         cpaNetwork: network,
-                        externalOfferId: externalId,
+                        externalOfferId: offerLink,
                         title: title.substring(0, 100),
                         description: description,
                         payout: payout,
                         userReward: userReward,
                         rewardPoints: rewardPoints,
-                        link: link + "&subid={user_id}",
                         countries: countries,
-                        category: offer.category || 'General',
+                        category: offer.category || 'App Install',
                         deviceTypes: ['desktop', 'mobile', 'tablet'],
                         thumbnailUrl: thumbnail,
                         isActive: true,
@@ -120,8 +102,7 @@ export async function POST(req: Request) {
 
                 syncedCount++;
             } catch (err) {
-                console.error('Error syncing offer:', err);
-                errorCount++;
+                console.error('Error syncing offer row:', err);
             }
         }
 
