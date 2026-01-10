@@ -13,6 +13,11 @@ export default function PrivacyPage() {
                         <h2 className="text-2xl font-bold text-gray-900 mb-4">Third Parties</h2>
                         <p>We share limited data with our advertising partners to track offer completions and credit your account.</p>
                     </section>
+                    <section className="pt-8 border-t border-gray-100">
+                        <h2 className="text-2xl font-bold text-gray-900 mb-4">Contact Us</h2>
+                        <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+                        <a href="mailto:support@taskspot.site" className="text-indigo-600 font-bold hover:underline">support@taskspot.site</a>
+                    </section>
                 </div>
             </div>
         </div>

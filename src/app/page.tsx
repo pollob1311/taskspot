@@ -206,6 +206,7 @@ export default function HomePage() {
                             <ul className="space-y-2 text-sm text-[var(--muted)]">
                                 <li><a href="/help">Help Center</a></li>
                                 <li><a href="/support">Contact Support</a></li>
+                                <li className="pt-2 text-xs">Email: <a href="mailto:support@taskspot.site" className="hover:text-indigo-600 transition-colors">support@taskspot.site</a></li>
                             </ul>
                         </div>
                     </div>

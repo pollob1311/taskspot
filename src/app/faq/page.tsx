@@ -37,6 +37,14 @@ export default function FAQPage() {
                         </div>
                     ))}
                 </div>
+
+                <div className="mt-16 text-center p-10 bg-indigo-600 rounded-[40px] text-white">
+                    <h3 className="text-2xl font-bold mb-4">Still have questions?</h3>
+                    <p className="mb-8 opacity-90">Can&apos;t find the answer you&apos;re looking for? Reach out to our team.</p>
+                    <a href="mailto:support@taskspot.site" className="bg-white text-indigo-600 px-8 py-3 rounded-xl font-black hover:scale-105 transition-all inline-block">
+                        Contact Support
+                    </a>
+                </div>
             </div>
         </div>
     );
