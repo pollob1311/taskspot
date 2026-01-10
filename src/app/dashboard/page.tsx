@@ -147,9 +147,9 @@ export default function DashboardPage() {
                                             </>
                                         )}
                                         <div className="h-px bg-slate-50 my-1.5"></div>
-                                        <Link href="/contact" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 rounded-xl transition-colors">
+                                        <a href="mailto:support@taskspot.site" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 rounded-xl transition-colors">
                                             <span className="w-7 h-7 flex items-center justify-center bg-white border border-slate-100 rounded-lg shadow-sm">✉️</span> Contact Support
-                                        </Link>
+                                        </a>
                                         <div className="h-px bg-slate-50 my-1.5"></div>
                                         <button onClick={() => signOut({ callbackUrl: '/login' })} className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-red-500 hover:bg-red-50 rounded-xl">🚪 Sign Out</button>
                                     </div>

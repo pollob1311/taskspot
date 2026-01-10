@@ -13,7 +13,7 @@ export default function SupportPage() {
                         Contact Support Team
                     </button>
                     <div className="mt-8 text-sm text-gray-400">
-                        Or email us directly at: <span className="font-bold text-purple-600">support@cparewards.com</span>
+                        Or email us directly at: <a href="mailto:support@taskspot.site" className="font-bold text-purple-600 hover:underline">support@taskspot.site</a>
                     </div>
                 </div>
             </div>
