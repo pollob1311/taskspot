@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
@@ -15,15 +16,43 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-    title: "TaskSpot - Earn Rewards by Completing Simple Tasks",
-    description: "Join TaskSpot and earn money online by completing simple tasks and offers. Get paid in crypto, PayPal, gift cards, and more. Instant withdrawals, global access, and $500k+ already paid out.",
-    keywords: "earn money online, complete tasks, rewards platform, CPA offers, PayPal rewards, cryptocurrency earnings, gift cards, make money, online income, task rewards, cash back, TaskSpot",
-    authors: [{ name: "TaskSpot" }],
+    title: "TaskSpot | Earn Crypto, Cash & Rewards by Completing Tasks",
+    description: "Join TaskSpot, the best GPT platform to earn money online. Complete surveys, CPAGrip offers, and micro-tasks to get paid in Crypto, PayPal, or Gift Cards. Fast payouts and global access.",
+    keywords: [
+        "TaskSpot",
+        "taskspot.site",
+        "earn money online",
+        "task earn",
+        "gpt earn",
+        "offerwall",
+        "CPAGrip offers",
+        "make money 2026",
+        "rewards platform",
+        "legit earning site",
+        "earn crypto by tasks"
+    ],
+    authors: [{ name: "TaskSpot Team" }],
     openGraph: {
-        title: "TaskSpot - Earn Rewards Completing Tasks",
-        description: "Join thousands earning money by completing simple tasks. Get paid in crypto, PayPal, or gift cards.",
-        type: "website",
+        title: "TaskSpot - Earn Rewards Today",
+        description: "Join TaskSpot and start earning by completing high-value tasks.",
+        url: "https://taskspot.site",
         siteName: "TaskSpot",
+        images: [
+            {
+                url: "/taskspot-logo.png",
+                width: 1200,
+                height: 630,
+                alt: "TaskSpot Banner",
+            },
+        ],
+        locale: "en_US",
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "TaskSpot | Earn Rewards Online",
+        description: "Earn money online with TaskSpot by completing simple offers.",
+        images: ["/taskspot-logo.png"],
     },
 };
 
@@ -35,6 +64,21 @@ export default function RootLayout({
     return (
         <html lang="en" className="dark">
             <body className={`${inter.variable} ${poppins.variable} antialiased`}>
+                {/* Crisp Support Chat Script */}
+                <Script id="crisp-chat" strategy="afterInteractive">
+                    {`
+            window.$crisp=[];
+            window.CRISP_WEBSITE_ID="d9b40391-5192-42a0-abef-1b677d59b0f4";
+            (function(){
+              d=document;
+              s=d.createElement("script");
+              s.src="https://client.crisp.chat/l.js";
+              s.async=1;
+              d.getElementsByTagName("head")[0].appendChild(s);
+            })();
+          `}
+                </Script>
+
                 <Providers>{children}</Providers>
             </body>
         </html>

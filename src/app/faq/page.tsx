@@ -1,20 +1,39 @@
 export default function FAQPage() {
     const faqs = [
-        { q: "How much can I earn?", a: "Earnings depend on your activity and location. Active users commonly earn $50-$200 per week." },
-        { q: "When do I get paid?", a: "Withdrawals are processed within 24-48 hours once requested. Minimum withdrawal is $5.00." },
-        { q: "Is it really free?", a: "Yes, TaskSpot is 100% free to join and use. We earn commission from our advertising partners." },
-        { q: "Can I use a VPN?", a: "No, the use of VPNs or proxies is strictly prohibited and will result in an immediate permanent ban." }
+        {
+            question: "How can I earn money online in the world with TaskSpot?",
+            answer: "TaskSpot is the easiest way to earn money online in the world. By joining our legit micro-task platform, you can complete simple CPAGrip and CPALead offers, take surveys, and earn rewards that can be converted into Cash or Crypto."
+        },
+        {
+            question: "Is TaskSpot.site a legit earning platform or a scam?",
+            answer: "TaskSpot is a 100% legit earning platform with thousands of active members. we prioritize security and provide fast withdrawal options for our global users, making us the best offerwall site for 2026."
+        },
+        {
+            question: "How to earn from taskspot.site efficiently?",
+            answer: "To maximize your earnings on taskspot.site, we recommend checking the 'Featured Offers' daily. These are usually high-paying tasks from networks like CPAGrip and earnstar that give the most reward for your time."
+        },
+        {
+            question: "What are the withdrawal methods on TaskSpot?",
+            answer: "We offer multiple payout options including PayPal rewards, Cryptocurrency (Bitcoin/Litecoin), and Gift Cards. As a top-tier rewards platform, we ensure your hard-earned money reaches you within 30minute-24hour payout."
+        },
+        {
+            question: "Can I use a VPN to complete tasks on TaskSpot?",
+            answer: "No. To maintain a secure and legit earning environment, using VPNs or proxies is strictly prohibited on taskspot.site. Accounts using such tools will be permanently banned."
+        }
     ];
 
     return (
-        <div className="min-h-screen bg-white py-20">
+        <div className="min-h-screen bg-slate-50 py-20">
             <div className="container mx-auto px-4 max-w-3xl">
-                <h1 className="text-5xl font-black mb-12 text-gray-900 tracking-tight">Frequently Asked Questions</h1>
-                <div className="space-y-8">
-                    {faqs.map((faq, i) => (
-                        <div key={i} className="glass-card p-8 rounded-2xl border-gray-100">
-                            <h3 className="text-xl font-bold mb-4 text-gray-900">{faq.q}</h3>
-                            <p className="text-gray-600 leading-relaxed">{faq.a}</p>
+                <h1 className="text-4xl font-black text-slate-900 mb-12 text-center">
+                    Frequently Asked Questions | TaskSpot Help
+                </h1>
+
+                <div className="space-y-6">
+                    {faqs.map((faq, index) => (
+                        <div key={index} className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                            <h3 className="text-xl font-bold text-indigo-600 mb-4">{faq.question}</h3>
+                            <p className="text-slate-600 leading-relaxed">{faq.answer}</p>
                         </div>
                     ))}
                 </div>

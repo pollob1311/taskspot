@@ -54,6 +54,12 @@ export default function HomePage() {
                                 How It Works
                             </a>
                             <a
+                                href="/blog"
+                                className="glass-card px-10 py-5 text-xl rounded-xl hover:bg-white transition-all border-gray-200 hover:border-neon-purple text-gray-800 flex items-center justify-center font-semibold"
+                            >
+                                Read Blog
+                            </a>
+                            <a
                                 href="/register"
                                 className="inline-block bg-white text-neon-cyan font-bold px-10 py-5 rounded-xl hover:scale-105 transition-transform text-xl shadow-lg border border-cyan-100 flex items-center justify-center"
                             >
@@ -182,6 +188,7 @@ export default function HomePage() {
                                 <li><a href="/about">About Us</a></li>
                                 <li><a href="/contact">Contact</a></li>
                                 <li><a href="/faq">FAQ</a></li>
+                                <li><a href="/blog">Blog</a></li>
                             </ul>
                         </div>
 
