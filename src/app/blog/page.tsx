@@ -3,8 +3,7 @@ import Link from 'next/link';
 export const metadata = {
     title: "TaskSpot Official Blog | How to Earn Money Online & Pro Survey Tips",
     description: "Discover the best ways to earn $10 daily from TaskSpot.site. Read our top 10 pro tips to complete CPAGrip offers and surveys successfully on the best offerwall site.",
-    keywords: "earn money online, taskspot, task earn, gpt earn, offerwall, CPAGrip offers,CPAlead,surveys,earn $10 daily from TaskSpot.site. Read our top 10 pro tips to complete CPAGrip offers and surveys successfully on the best offerwall site.",
-    keywords: "earn money online, taskspot, task earn, gpt earn, offerwall, CPAGrip offers, make money 2026, survey tips, earn $10 daily guide",
+    keywords: "earn money online, taskspot, task earn, gpt earn, offerwall, CPAGrip offers, CPAlead, surveys, earn $10 daily, make money 2026, survey tips, earn $10 daily guide",
 };
 
 export default function BlogPage() {
