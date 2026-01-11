@@ -32,6 +32,10 @@ export const metadata: Metadata = {
         "earn crypto by tasks"
     ],
     authors: [{ name: "TaskSpot Team" }],
+    // Google Search Console ভেরিফিকেশন এখানে যোগ করা হয়েছে
+    verification: {
+        google: "qr54Eel2NO8DtmRm92oVVFT-1VYG8N8moYaxDpdjtTc",
+    },
     openGraph: {
         title: "TaskSpot - Earn Rewards Today",
         description: "Join TaskSpot and start earning by completing high-value tasks.",
