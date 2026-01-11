@@ -32,14 +32,18 @@ export const metadata: Metadata = {
         "earn crypto by tasks"
     ],
     authors: [{ name: "TaskSpot Team" }],
-    // Google Search Console ভেরিফিকেশন এখানে যোগ করা হয়েছে
+    // গুগল সার্চ কনসোল ভেরিফিকেশন
     verification: {
         google: "qr54Eel2NO8DtmRm92oVVFT-1VYG8N8moYaxDpdjtTc",
+    },
+    // Canonical URL (গুগলকে আসল সাইট চেনানোর জন্য)
+    alternates: {
+        canonical: "https://www.taskspot.site",
     },
     openGraph: {
         title: "TaskSpot - Earn Rewards Today",
         description: "Join TaskSpot and start earning by completing high-value tasks.",
-        url: "https://taskspot.site",
+        url: "https://www.taskspot.site",
         siteName: "TaskSpot",
         images: [
             {
@@ -67,6 +71,26 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className="dark">
+            <head>
+                {/* Structured Data for Google and AI (Schema Markup) */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "WebSite",
+                            "name": "TaskSpot",
+                            "url": "https://www.taskspot.site",
+                            "description": "The best GPT platform to earn money online by completing micro-tasks.",
+                            "potentialAction": {
+                                "@type": "SearchAction",
+                                "target": "https://www.taskspot.site/blog?q={search_term_string}",
+                                "query-input": "required name=search_term_string"
+                            }
+                        })
+                    }}
+                />
+            </head>
             <body className={`${inter.variable} ${poppins.variable} antialiased`}>
                 {/* Crisp Support Chat Script */}
                 <Script id="crisp-chat" strategy="afterInteractive">
