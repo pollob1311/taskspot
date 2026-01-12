@@ -91,6 +91,45 @@
   .text-gradient {
     @apply bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent;
   }
+
+  /* Partner Card Gradients */
+  .partner-card-pink {
+    background: linear-gradient(135deg, #ff0080 0%, #7928ca 100%);
+  }
+
+  .partner-card-blue {
+    background: linear-gradient(135deg, #0070f3 0%, #00dfd8 100%);
+  }
+
+  .partner-card-purple {
+    background: linear-gradient(135deg, #7928ca 0%, #ff0080 100%);
+  }
+
+  .partner-card-green {
+    background: linear-gradient(135deg, #00dfd8 0%, #0070f3 100%);
+  }
+
+  .partner-card-orange {
+    background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  }
+
+  /* Custom Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-slate-800 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-700;
+  }
 }
 
 /* Custom animations */
