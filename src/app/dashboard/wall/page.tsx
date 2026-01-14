@@ -5,7 +5,7 @@ export default function EliteOfferWall() {
     const { data: session } = useSession();
 
     // আপনার CPAGrip লিঙ্ক এবং ট্র্যাকিং আইডি
-    const cpagripLink = `https://www.cpagrip.com/show.php?l=0&u=901217&id=1867725&tracking_id=${session?.user?.id}`;
+    const cpagripLink = `https://www.cpagrip.com/show.php?l=1867725&u=901217&tracking_id=${session?.user?.id}`;
 
     return (
         <div className="min-h-screen bg-[#f8fafc] p-4 md:p-8">
