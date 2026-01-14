@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronRight, Star, Zap, Layout, ShieldCheck } from 'lucide-react';
+import { ChevronRight, Star, Zap, Layout, ShieldCheck, Diamond } from 'lucide-react';
 
 interface Offer {
     id: string;
@@ -101,7 +101,6 @@ export default function DashboardPage() {
 
     return (
         <div className="min-h-screen bg-[var(--background)]">
-            {/* Restored Top Header */}
             <header className="bg-white border-b border-slate-100 shadow-sm sticky top-0 z-40 h-16">
                 <div className="container mx-auto px-1 md:px-4 h-full flex items-center justify-between gap-1 md:gap-4 relative">
                     <div className="flex items-center flex-shrink-0 relative">
@@ -161,6 +160,12 @@ export default function DashboardPage() {
                                     <div className="fixed inset-0 z-40" onClick={() => setIsMenuOpen(false)}></div>
                                     <div className="absolute right-0 mt-2 w-56 bg-white border border-slate-100 rounded-2xl shadow-2xl z-50 p-1.5 animate-in fade-in slide-in-from-top-1">
                                         <Link href="/dashboard/offers" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 rounded-xl transition-colors">🎯 Offers</Link>
+
+                                        {/* Elite Offers বাটন যোগ করা হয়েছে */}
+                                        <Link href="/dashboard/wall" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-indigo-600 bg-indigo-50/50 hover:bg-indigo-100 rounded-xl transition-colors">
+                                            <span className="w-7 h-7 flex items-center justify-center bg-white border border-indigo-100 rounded-lg shadow-sm text-sm">💎</span> Elite Wall
+                                        </Link>
+
                                         <Link href="/dashboard/referrals" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 rounded-xl transition-colors">👥 Referrals</Link>
                                         <Link href="/blog" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 rounded-xl transition-colors">📝 Read Blog</Link>
                                         <Link href="/dashboard/history" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 rounded-xl transition-colors">📊 History</Link>
@@ -174,10 +179,10 @@ export default function DashboardPage() {
                                         )}
                                         <div className="h-px bg-slate-50 my-1.5"></div>
                                         <a href="mailto:support@taskspot.site" className="flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-slate-700 hover:bg-indigo-50 rounded-xl transition-colors">
-                                            <span className="w-7 h-7 flex items-center justify-center bg-white border border-slate-100 rounded-lg shadow-sm">✉️</span> Contact Support
+                                            <span className="w-7 h-7 flex items-center justify-center bg-white border border-slate-100 rounded-lg shadow-sm">✉️</span> Support
                                         </a>
                                         <div className="h-px bg-slate-50 my-1.5"></div>
-                                        <button onClick={() => signOut({ callbackUrl: '/login' })} className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-red-500 hover:bg-red-50 rounded-xl">🚪 Sign Out</button>
+                                        <button onClick={() => signOut({ callbackUrl: '/login' })} className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-bold text-red-500 hover:bg-red-50 rounded-xl transition-colors">🚪 Sign Out</button>
                                     </div>
                                 </>
                             )}
@@ -187,25 +192,24 @@ export default function DashboardPage() {
             </header>
 
             <main className="container mx-auto px-4 py-8 lg:py-12">
-                {/* Restored Welcome Section */}
                 <div className={`${shouldAnimate ? 'transition-all duration-1000' : ''} overflow-hidden ${showWelcome ? 'max-h-[200px] opacity-100 mb-12' : 'max-h-0 opacity-0 mb-0'}`}>
-                    <h2 className="text-4xl font-black text-slate-900 dark:text-white mb-3 tracking-tight">
+                    <h2 className="text-4xl font-black text-slate-900 mb-3 tracking-tight">
                         Welcome back, <span className="text-indigo-600">{session?.user?.name || 'User'}</span>! 👋
                     </h2>
-                    <p className="text-lg text-slate-500 dark:text-slate-400 font-medium italic opacity-70">
+                    <p className="text-lg text-slate-500 font-medium italic opacity-70">
                         &quot;Quality is not an act, it is a habit.&quot; — Here&apos;s your overview
                     </p>
                 </div>
 
-                {/* Featured Offers Section */}
+                {/* Featured Offers Section with Elite Wall CTA */}
                 <div className="mb-12">
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2">
                             <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
-                            <h3 className="text-2xl font-bold dark:text-white uppercase tracking-tight">Featured Offers</h3>
+                            <h3 className="text-2xl font-bold uppercase tracking-tight">Featured Offers</h3>
                         </div>
-                        <Link href="/dashboard/offers" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
-                            View All <ChevronRight className="w-4 h-4" />
+                        <Link href="/dashboard/wall" className="hidden sm:flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-indigo-100 hover:scale-105 transition-all">
+                            <Diamond className="w-3 h-3" /> ACCESS ELITE WALL
                         </Link>
                     </div>
 
@@ -214,16 +218,10 @@ export default function DashboardPage() {
                     ) : (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                             {offers.map((offer) => (
-                                <Link key={offer.id} href={`/dashboard/offers?id=${offer.id}`} className="glass-card p-2 rounded-2xl card-hover border border-white/50 dark:border-slate-800 shadow-sm relative overflow-hidden group flex flex-col h-full min-h-[190px] dark:bg-slate-900">
+                                <Link key={offer.id} href={`/dashboard/offers?id=${offer.id}`} className="glass-card p-2 rounded-2xl card-hover border border-white/50 shadow-sm relative overflow-hidden group flex flex-col h-full min-h-[190px]">
                                     <div className="relative w-full h-32 -mt-2 -mx-2 mb-2 overflow-hidden rounded-t-2xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5">
                                         {offer.thumbnailUrl ? (
-                                            <Image
-                                                src={offer.thumbnailUrl}
-                                                alt={offer.title}
-                                                fill
-                                                className="object-cover group-hover:scale-110 transition-transform duration-500"
-                                                unoptimized
-                                            />
+                                            <Image src={offer.thumbnailUrl} alt={offer.title} fill className="object-cover group-hover:scale-110 transition-transform duration-500" unoptimized />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center text-4xl">🔥</div>
                                         )}
@@ -232,14 +230,14 @@ export default function DashboardPage() {
                                         </div>
                                     </div>
                                     <div className="flex flex-col justify-start px-1">
-                                        <h4 className="font-black text-[13px] line-clamp-1 group-hover:text-indigo-600 transition-colors uppercase tracking-tight leading-tight dark:text-white">{offer.title}</h4>
+                                        <h4 className="font-black text-[13px] line-clamp-1 group-hover:text-indigo-600 transition-colors uppercase tracking-tight leading-tight">{offer.title}</h4>
                                         <p className="text-[10px] text-slate-500 line-clamp-1 leading-none opacity-90 group-hover:opacity-100 transition-opacity">
                                             <span className="font-bold text-indigo-500/80 mr-1 uppercase">[{offer.category || 'TASK'}]</span>
                                             {offer.description}
                                         </p>
                                     </div>
                                     <div className="mt-1">
-                                        <div className="w-full bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 py-1 rounded-lg font-black text-[12px] uppercase tracking-wider block text-center transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-[0_4px_12px_rgba(16,185,129,0.2)] hover:shadow-[0_6px_16px_rgba(16,185,129,0.3)] btn-reflect">
+                                        <div className="w-full bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 py-1 rounded-lg font-black text-[12px] uppercase tracking-wider block text-center transition-all transform hover:scale-[1.02] active:scale-[0.98]">
                                             Start Earning
                                         </div>
                                     </div>
@@ -254,30 +252,22 @@ export default function DashboardPage() {
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2">
                             <Zap className="w-5 h-5 text-indigo-500 fill-indigo-500" />
-                            <h3 className="text-2xl font-bold dark:text-white uppercase tracking-tight">Offer Partners</h3>
+                            <h3 className="text-2xl font-bold uppercase tracking-tight">Offer Partners</h3>
                         </div>
-                        <Link href="/dashboard/offers" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
-                            View All <ChevronRight className="w-4 h-4" />
+                        <Link href="/dashboard/wall" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
+                            Go to Wall <ChevronRight className="w-4 h-4" />
                         </Link>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         {offerPartners.map((partner) => (
-                            <div key={partner.id} className={`relative group aspect-[4/5] rounded-3xl overflow-hidden cursor-pointer ${partner.gradient} p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-2xl`}>
-                                {partner.tag && (
-                                    <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
-                                        {partner.tag}
-                                    </div>
-                                )}
-                                <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <span className="text-2xl font-black text-white">{partner.name[0]}</span>
-                                </div>
+                            <Link key={partner.id} href="/dashboard/wall" className={`relative group aspect-[4/5] rounded-3xl overflow-hidden cursor-pointer ${partner.gradient} p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg`}>
+                                {partner.tag && <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">{partner.tag}</div>}
+                                <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl font-black text-white">{partner.name[0]}</span></div>
                                 <h3 className="text-sm font-black text-white uppercase tracking-wider mb-2">{partner.name}</h3>
                                 <div className="flex items-center gap-0.5">
-                                    {Array(5).fill(0).map((_, i) => (
-                                        <Star key={i} className={`w-3 h-3 ${i < partner.rating ? 'text-amber-300 fill-amber-300' : 'text-white/30'}`} />
-                                    ))}
+                                    {Array(5).fill(0).map((_, i) => (<Star key={i} className={`w-3 h-3 ${i < partner.rating ? 'text-amber-300 fill-amber-300' : 'text-white/30'}`} />))}
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </section>
@@ -287,46 +277,38 @@ export default function DashboardPage() {
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2">
                             <ShieldCheck className="w-5 h-5 text-emerald-500" />
-                            <h3 className="text-2xl font-bold dark:text-white uppercase tracking-tight">Survey Partners</h3>
+                            <h3 className="text-2xl font-bold uppercase tracking-tight">Survey Partners</h3>
                         </div>
-                        <Link href="/dashboard/surveys" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
-                            View All <ChevronRight className="w-4 h-4" />
+                        <Link href="/dashboard/wall" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
+                            Go to Wall <ChevronRight className="w-4 h-4" />
                         </Link>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         {surveyPartners.map((partner) => (
-                            <div key={partner.id} className={`relative group aspect-[4/5] rounded-3xl overflow-hidden cursor-pointer ${partner.gradient} p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-2xl`}>
-                                {partner.tag && (
-                                    <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">
-                                        {partner.tag}
-                                    </div>
-                                )}
-                                <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                                    <span className="text-2xl font-black text-white">{partner.name[0]}</span>
-                                </div>
+                            <Link key={partner.id} href="/dashboard/wall" className={`relative group aspect-[4/5] rounded-3xl overflow-hidden cursor-pointer ${partner.gradient} p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg`}>
+                                {partner.tag && <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">{partner.tag}</div>}
+                                <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl font-black text-white">{partner.name[0]}</span></div>
                                 <h3 className="text-sm font-black text-white uppercase tracking-wider mb-2">{partner.name}</h3>
                                 <div className="flex items-center gap-0.5">
-                                    {Array(5).fill(0).map((_, i) => (
-                                        <Star key={i} className={`w-3 h-3 ${i < partner.rating ? 'text-amber-300 fill-amber-300' : 'text-white/30'}`} />
-                                    ))}
+                                    {Array(5).fill(0).map((_, i) => (<Star key={i} className={`w-3 h-3 ${i < partner.rating ? 'text-amber-300 fill-amber-300' : 'text-white/30'}`} />))}
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </section>
 
-                {/* Restored Recent Activity */}
-                <div className="glass-card p-6 lg:p-8 rounded-3xl shadow-sm border border-white/50 dark:border-slate-800 dark:bg-slate-900">
+                {/* Recent Activity */}
+                <div className="glass-card p-6 lg:p-8 rounded-3xl shadow-sm border border-white/50">
                     <div className="flex items-center justify-between mb-8">
-                        <h3 className="text-2xl font-bold dark:text-white uppercase tracking-tight">Recent Activity</h3>
+                        <h3 className="text-2xl font-bold uppercase tracking-tight">Recent Activity</h3>
                         <Link href="/dashboard/history" className="text-sm font-bold text-indigo-600">View All</Link>
                     </div>
                     <div className="space-y-4">
-                        <div className="flex items-center justify-between py-4 border-b border-slate-100 dark:border-slate-800 hover:bg-white/50 dark:hover:bg-slate-800 rounded-xl px-4 transition-colors">
+                        <div className="flex items-center justify-between py-4 border-b border-slate-100 hover:bg-white/50 rounded-xl px-4 transition-colors">
                             <div className="flex items-center gap-4">
                                 <div className="p-3 bg-indigo-500/10 rounded-full">✨</div>
                                 <div>
-                                    <div className="font-bold dark:text-white">Welcome Bonus</div>
+                                    <div className="font-bold">Welcome Bonus</div>
                                     <div className="text-xs text-slate-400 uppercase tracking-wider">Account Initialization</div>
                                 </div>
                             </div>
