@@ -6,7 +6,7 @@ export default function EliteOfferWall() {
 
     // আপনার CPAGrip লিঙ্ক এবং ট্র্যাকিং আইডি
     // src/app/dashboard/wall/page.tsx ফাইলে এই লাইনটি ঠিক করুন
-    const cpagripLink = `https://www.cpagrip.com/show.php?l=0&u=901217&id=1867725&tracking_id=${session?.user?.id}`;
+    const cpagripLink = `https://www.cpagrip.com/show.php?l=1867725&u=901217&tracking_id=${session?.user?.id}`;
 
     return (
         <div className="min-h-screen bg-[#f8fafc] p-4 md:p-8">
