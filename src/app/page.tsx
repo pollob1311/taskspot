@@ -79,9 +79,9 @@ export default function HomePage() {
                 </section>
 
                 {/* 2. How It Works Section */}
-                <section id="how-it-works" className="py-4 md:py-6 relative z-10">
-                    <div className="absolute inset-0 bg-slate-50/40 backdrop-blur-sm -z-10"></div>
-                    <div className="container mx-auto px-4 text-center">
+                <section id="how-it-works" className="py-4 md:py-6 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-slate-50/40 backdrop-blur-sm z-0"></div>
+                    <div className="container mx-auto px-4 text-center relative z-20">
                         <h2 className="text-4xl font-black text-slate-900 mb-6 uppercase">How It Works</h2>
                         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                             <div className="bg-white p-6 rounded-[30px] shadow-sm">
@@ -104,9 +104,9 @@ export default function HomePage() {
                 </section>
 
                 {/* 2.1 Running Featured Offers */}
-                <section className="py-8 md:py-12 relative z-10 border-t border-slate-100">
-                    <div className="absolute inset-0 bg-white/30 backdrop-blur-sm -z-10"></div>
-                    <div className="container mx-auto px-4">
+                <section className="py-8 md:py-12 relative overflow-hidden border-t border-slate-100">
+                    <div className="absolute inset-0 bg-white/30 backdrop-blur-sm z-0"></div>
+                    <div className="container mx-auto px-4 relative z-20">
                         <div className="flex items-center justify-between mb-8">
                             <div className="flex items-center gap-2">
                                 <Zap className="w-5 h-5 text-indigo-500 fill-indigo-500" />
@@ -156,9 +156,9 @@ export default function HomePage() {
                 </section>
 
                 {/* 3. Payment Methods */}
-                <section className="py-12 md:py-16 relative z-10 border-t border-slate-100 text-center overflow-hidden">
+                <section className="py-12 md:py-16 relative overflow-hidden border-t border-slate-100 text-center">
                     {/* Animated Background Logos Layer */}
-                    <div className="absolute inset-0 -z-10 pointer-events-none">
+                    <div className="absolute inset-0 z-0 pointer-events-none">
                         {/* PayPal Floating */}
                         <div className="absolute top-[10%] left-[5%] animate-floating-slow">
                             <Image src="/images/payments/paypal.png" alt="PayPal" width={100} height={50} className="drop-shadow-sm object-contain" unoptimized />
@@ -185,8 +185,8 @@ export default function HomePage() {
                         </div>
                     </div>
 
-                    <div className="absolute inset-0 bg-green-100/80 -z-20 border-y border-green-200/50"></div>
-                    <div className="container mx-auto px-4">
+                    <div className="absolute inset-0 bg-green-100/80 z-0 border-y border-green-200/50"></div>
+                    <div className="container mx-auto px-4 relative z-20">
                         <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Multiple Withdrawal Options</h2>
                         <div className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-5xl mx-auto">
                             {[
@@ -208,9 +208,9 @@ export default function HomePage() {
                 </section>
 
                 {/* 3.1 Latest Blog Posts */}
-                <section className="py-8 md:py-12 relative z-10 border-t border-slate-100">
-                    <div className="absolute inset-0 bg-white/30 backdrop-blur-sm -z-10"></div>
-                    <div className="container mx-auto px-4">
+                <section className="py-8 md:py-12 relative overflow-hidden border-t border-slate-100">
+                    <div className="absolute inset-0 bg-white/30 backdrop-blur-sm z-0"></div>
+                    <div className="container mx-auto px-4 relative z-20">
                         <div className="flex items-center justify-between mb-8">
                             <h2 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tight">📝 Latest from Blog</h2>
                             <Link href="/blog" className="text-sm font-bold text-indigo-600 hover:text-indigo-500">
