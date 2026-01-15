@@ -14,8 +14,7 @@ export default function EliteOfferWall() {
     }, [status, router]);
 
     // এটিই আপনার ফাইনাল এবং সঠিক লিঙ্ক
-    const cpagripLink = `https://www.cpagrip.com/show.php?id=1867725&u=901217&tracking_id=${session?.user?.id || 'guest'}`;
-
+    const cpagripLink = `https://www.cpagrip.com/show.php?l=1867725&u=901217&tracking_id=${session?.user?.id || 'guest'}`;
     if (status === 'loading') {
         return (
             <div className="min-h-screen flex items-center justify-center bg-slate-50">
