@@ -156,6 +156,23 @@
   100% { transform: translateX(250%) skewX(-25deg); }
 }
 
+@keyframes floating {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+.animate-floating {
+  animation: floating 4s ease-in-out infinite;
+}
+
+.animate-floating-slow {
+  animation: floating 6s ease-in-out infinite;
+}
+
+.animate-floating-fast {
+  animation: floating 2.5s ease-in-out infinite;
+}
+
 .btn-reflect {
   position: relative;
   overflow: hidden;

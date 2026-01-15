@@ -68,8 +68,8 @@ export const ShatterText = () => {
                 }}
             />
 
-            {/* Shattering Text */}
-            <h1 className="text-[clamp(1.5rem,8vw,8rem)] font-black tracking-tight flex items-center justify-center gap-x-[2vw] lg:gap-x-[4vw] text-gray-900 select-none relative z-10 w-full px-4 leading-none whitespace-nowrap overflow-visible">
+            {/* Shattering Text - Optimized for all screen sizes */}
+            <h1 className="text-[clamp(1.75rem,5vw,6rem)] font-black tracking-tight flex items-center justify-center gap-x-[1.5vw] lg:gap-x-[2.5vw] text-gray-900 select-none relative z-10 w-full px-2 leading-none overflow-visible">
                 {words.map((word, wordIndex) => {
                     return (
                         <div key={wordIndex} className="flex items-center gap-x-[1px] sm:gap-x-[2px] relative">
@@ -89,9 +89,9 @@ export const ShatterText = () => {
                                 );
                             })}
 
-                            {/* Attach Dot to the last word */}
+                            {/* Dot after the last word - inline to ensure visibility */}
                             {wordIndex === words.length - 1 && (
-                                <span className="w-[0.12em] h-[0.12em] md:w-[0.2em] md:h-[0.2em] rounded-full inline-block dot-cycle border-none bg-neon-purple absolute -right-[0.25em] bottom-[0.2em]"></span>
+                                <span className="w-[0.15em] h-[0.15em] md:w-[0.2em] md:h-[0.2em] rounded-full inline-block dot-cycle border-none bg-neon-purple ml-[0.05em] mr-[0.3em] relative top-[-0.5em]"></span>
                             )}
                         </div>
                     );

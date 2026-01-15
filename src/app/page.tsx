@@ -1,218 +1,287 @@
+'use client';
+
 import { ShatterText } from '@/components/ShatterText';
+import { ChevronRight, Star, Zap, Layout, ShieldCheck, Diamond } from 'lucide-react';
 import { BackgroundParticles } from '@/components/BackgroundParticles';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function HomePage() {
     return (
-        <div className="min-h-screen relative">
+        <div className="min-h-screen relative overflow-x-hidden bg-slate-50/50">
             <BackgroundParticles />
-            {/* Hero Section */}
-            <section className="relative overflow-hidden min-h-[60vh] flex items-center justify-center">
 
-                {/* ... other background elements ... */}
-
-                <div className="relative container mx-auto px-4 z-10 -mt-10">
-                    <div className="max-w-5xl mx-auto text-center">
-                        {/* Logo Badge */}
-                        <div className="inline-block mb-0 animate-fade-in">
-                            <div className="flex items-center justify-center p-0">
-                                <Image
-                                    src="/taskspot-logo.png"
-                                    alt="TaskSpot Logo"
-                                    width={300}
-                                    height={150}
-                                    className="w-[300px] h-auto object-contain drop-shadow-xl hover:scale-105 transition-transform duration-300"
-                                    priority
-                                />
+            <main className="relative z-10">
+                {/* ১. Hero Section */}
+                <section className="min-h-[70vh] flex items-center justify-center py-4 md:py-8">
+                    <div className="container mx-auto px-4 md:px-8">
+                        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16">
+                            {/* Left: Sign-In Box */}
+                            <div className="w-full max-w-[400px] lg:min-w-[360px] xl:min-w-[400px] order-2 lg:order-1 flex-shrink-0">
+                                <div className="glass-card p-8 rounded-[40px] shadow-2xl border border-slate-100 backdrop-blur-xl bg-white/90">
+                                    <h3 className="text-xl font-black text-slate-900 mb-6 text-center lg:text-left">Welcome Back!</h3>
+                                    <form className="space-y-4">
+                                        <div className="space-y-4 text-left">
+                                            <div className="space-y-1">
+                                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Email Address</label>
+                                                <input type="email" placeholder="name@example.com" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Password</label>
+                                                <input type="password" placeholder="••••••••" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" />
+                                            </div>
+                                        </div>
+                                        <button type="submit" className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95">
+                                            Sign In
+                                        </button>
+                                        <div className="text-center pt-2">
+                                            <Link href="/register" className="text-sm font-bold text-indigo-600 hover:underline">Create Account →</Link>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Interactive Main Headline */}
-                        <div className="mb-4 animate-slide-up w-full max-w-none">
-                            <ShatterText />
-                        </div>
+                            {/* Right: Main Content */}
+                            <div className="flex-1 flex flex-col items-center lg:items-end text-center lg:text-right order-1 lg:order-2 w-full overflow-visible pr-4 lg:pr-8">
+                                <div className="mb-6 md:mb-10">
+                                    <Image src="/taskspot-logo.png" alt="TaskSpot Logo" width={320} height={160} className="w-[180px] md:w-[280px] xl:w-[350px] h-auto object-contain drop-shadow-2xl" priority />
+                                </div>
 
-                        <p className="text-xl md:text-2xl mb-6 text-gray-600 max-w-2xl mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                            Join the elite network. Complete high-value tasks.
-                            <br className="hidden md:block" />
-                            Get paid in <span className="text-neon-cyan font-bold">Crypto</span>, <span className="text-neon-purple font-bold">Cards</span>, or <span className="text-neon-blue font-bold">Cash</span>.
-                        </p>
+                                <div className="mb-6 w-full flex justify-center lg:justify-end overflow-visible">
+                                    <div className="w-full">
+                                        <ShatterText />
+                                    </div>
+                                </div>
 
-                        {/* CTA Buttons */}
-                        <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-                            <a
-                                href="/register"
-                                className="btn-gradient btn-reflect px-10 py-5 text-2xl font-black rounded-xl shadow-glow transition-all hover:scale-105"
-                            >
-                                Start Earning
-                            </a>
-                            <a
-                                href="#how-it-works"
-                                className="glass-card px-10 py-5 text-xl rounded-xl hover:bg-white transition-all border-gray-200 hover:border-neon-purple text-gray-800 flex items-center justify-center font-semibold"
-                            >
-                                How It Works
-                            </a>
-                            <a
-                                href="/blog"
-                                className="glass-card px-10 py-5 text-xl rounded-xl hover:bg-white transition-all border-gray-200 hover:border-neon-purple text-gray-800 flex items-center justify-center font-semibold"
-                            >
-                                Read Blog
-                            </a>
-                            <a
-                                href="/register"
-                                className="inline-block bg-white text-neon-cyan font-bold px-10 py-5 rounded-xl hover:scale-105 transition-transform text-xl shadow-lg border border-cyan-100 flex items-center justify-center"
-                            >
-                                Sign Up Now - It&apos;s Free!
-                            </a>
-                        </div>
+                                <p className="text-base sm:text-lg md:text-2xl xl:text-3xl mb-8 text-slate-600 max-w-3xl font-medium leading-relaxed px-4 lg:px-0">
+                                    Join the elite network. Complete high-value tasks.
+                                    <br className="hidden md:block" />
+                                    Get paid in <span className="text-cyan-500 font-black">Crypto</span>, <span className="text-purple-500 font-black">Cards</span>, or <span className="text-indigo-600 font-black">Cash</span>.
+                                </p>
 
-                        {/* Trust Indicators */}
-                        <div className="flex flex-wrap justify-center gap-12 text-sm text-gray-600 animate-fade-in" style={{ animationDelay: '0.6s' }}>
-                            <div className="flex items-center gap-3">
-                                <span className="w-2 h-2 rounded-full bg-neon-success"></span>
-                                <span>$500k+ Paid Out</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <span className="w-2 h-2 rounded-full bg-neon-purple"></span>
-                                <span>Instant Withdrawals</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <span className="w-2 h-2 rounded-full bg-neon-blue"></span>
-                                <span>Global Access</span>
+                                <div className="flex flex-wrap gap-4 justify-center lg:justify-end mb-10">
+                                    <Link href="/register" className="bg-indigo-600 text-white px-10 py-4 md:px-12 md:py-5 text-lg md:text-xl font-black rounded-2xl shadow-xl hover:scale-105 transition-all">Start Earning</Link>
+                                    <Link href="/blog" className="glass-card bg-white px-8 py-4 md:px-10 md:py-5 text-lg rounded-2xl border border-slate-200 font-bold text-slate-700 hover:bg-slate-50">Read Blog</Link>
+                                </div>
+
+                                <div className="flex flex-wrap justify-center lg:justify-end gap-6 md:gap-10 text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+                                        <span>$500k+ Paid Out</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span>Global Access</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* How It Works Section */}
-            <section id="how-it-works" className="py-12 bg-[var(--background)]">
-                <div className="container mx-auto px-4">
-                    <h2 className="text-4xl font-bold text-center mb-8">
-                        How It Works
-                    </h2>
-
-                    <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                        {/* Step 1 */}
-                        <Link href="/register" className="glass-card p-8 rounded-2xl text-center card-hover block h-full">
-                            <div className="text-5xl mb-4">📝</div>
-                            <h3 className="text-2xl font-semibold mb-3">1. Register</h3>
-                            <p className="text-[var(--muted)]">
-                                Create your free account in under 2 minutes. No credit card required.
-                            </p>
-                        </Link>
-
-                        {/* Step 2 */}
-                        <div className="glass-card p-8 rounded-2xl text-center card-hover">
-                            <div className="text-5xl mb-4">🎯</div>
-                            <h3 className="text-2xl font-semibold mb-3">2. Complete Offers</h3>
-                            <p className="text-[var(--muted)]">
-                                Browse hundreds of offers and complete the ones you like. Earn points instantly.
-                            </p>
-                        </div>
-
-                        {/* Step 3 */}
-                        <div className="glass-card p-8 rounded-2xl text-center card-hover">
-                            <div className="text-5xl mb-4">💸</div>
-                            <h3 className="text-2xl font-semibold mb-3">3. Get Paid</h3>
-                            <p className="text-[var(--muted)]">
-                                Withdraw via PayPal, crypto, gift cards, or bank transfer. Your choice!
-                            </p>
+                {/* ২. How It Works Section */}
+                <section id="how-it-works" className="py-4 md:py-6 relative z-10">
+                    <div className="absolute inset-0 bg-slate-50/40 backdrop-blur-sm -z-10"></div>
+                    <div className="container mx-auto px-4 text-center">
+                        <h2 className="text-4xl font-black text-slate-900 mb-6 uppercase">How It Works</h2>
+                        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                            <div className="bg-white p-6 rounded-[30px] shadow-sm">
+                                <div className="text-4xl mb-3">📝</div>
+                                <h3 className="text-xl font-bold mb-2 text-slate-900">1. Register</h3>
+                                <p className="text-slate-500 text-sm font-medium leading-relaxed">Create your free account in under 2 minutes.</p>
+                            </div>
+                            <div className="bg-white p-6 rounded-[30px] shadow-sm">
+                                <div className="text-4xl mb-3">🎯</div>
+                                <h3 className="text-xl font-bold mb-2 text-slate-900">2. Complete Offers</h3>
+                                <p className="text-slate-500 text-sm font-medium leading-relaxed">Browse hundreds of offers and complete the ones you like.</p>
+                            </div>
+                            <div className="bg-white p-6 rounded-[30px] shadow-sm">
+                                <div className="text-4xl mb-3">💸</div>
+                                <h3 className="text-xl font-bold mb-2 text-slate-900">3. Get Paid</h3>
+                                <p className="text-slate-500 text-sm font-medium text-center">Withdraw via PayPal, crypto, or gift cards.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* Payment Methods */}
-            <section className="py-20 bg-[var(--card)]">
-                <div className="container mx-auto px-4">
-                    <h2 className="text-4xl font-bold text-center mb-12">
-                        Multiple Withdrawal Options
-                    </h2>
+                {/* ২.১ Running Featured Offers */}
+                <section className="py-8 md:py-12 relative z-10 border-t border-slate-100">
+                    <div className="absolute inset-0 bg-white/30 backdrop-blur-sm -z-10"></div>
+                    <div className="container mx-auto px-4">
+                        <div className="flex items-center justify-between mb-8">
+                            <div className="flex items-center gap-2">
+                                <Zap className="w-5 h-5 text-indigo-500 fill-indigo-500" />
+                                <h2 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tight">Running Featured Offers</h2>
+                            </div>
+                            <Link href="/register" className="hidden sm:flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-indigo-100 hover:scale-105 transition-all">
+                                <Diamond className="w-3 h-3" /> REGISTER TO ACCESS
+                            </Link>
+                        </div>
 
-                    <div className="flex flex-wrap justify-center gap-6 max-w-4xl mx-auto">
-                        {[
-                            '💳 Visa/Mastercard',
-                            '💰 PayPal',
-                            '₿ Bitcoin',
-                            'Ξ Ethereum',
-                            '💵 USDT',
-                            '🎁 Gift Cards',
-                            '📱 Mobile Money',
-                            '🏦 Bank Transfer',
-                        ].map((method, index) => (
-                            <span
-                                key={index}
-                                className="glass-card px-6 py-3 rounded-full font-semibold"
-                            >
-                                {method}
-                            </span>
-                        ))}
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                            {[
+                                { id: 1, title: 'Download & Play', reward: 1.50, cat: 'GAME', img: '🎮' },
+                                { id: 2, title: 'Survey Expert', reward: 2.20, cat: 'SURVEY', img: '📝' },
+                                { id: 3, title: 'Sign Up Bonus', reward: 0.75, cat: 'SIGNUP', img: '✨' },
+                                { id: 4, title: 'Mobile App Test', reward: 3.10, cat: 'MOBILE', img: '📱' },
+                                { id: 5, title: 'Crypto Wallet', reward: 5.00, cat: 'HOT', img: '₿' },
+                                { id: 6, title: 'Watch & Earn', reward: 0.25, cat: 'VIDEO', img: '🎬' },
+                                { id: 7, title: 'Quick Task', reward: 1.10, cat: 'CASH', img: '💸' },
+                                { id: 8, title: 'Premium Survey', reward: 4.50, cat: 'SURVEY', img: '⭐' },
+                                { id: 9, title: 'Beta Testing', reward: 2.80, cat: 'APP', img: '🛠️' },
+                                { id: 10, title: 'Daily Reward', reward: 0.50, cat: 'BONUS', img: '🎁' }
+                            ].map((offer) => (
+                                <Link key={offer.id} href="/register" className="glass-card p-2 rounded-2xl card-hover border border-white/50 shadow-sm relative overflow-hidden group flex flex-col h-full min-h-[190px] bg-white/60">
+                                    <div className="relative w-full h-32 -mt-2 -mx-2 mb-2 overflow-hidden rounded-t-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center text-4xl">
+                                        {offer.img}
+                                        <div className="absolute top-2 right-2 font-mono font-bold text-emerald-600 bg-white/95 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-[13px] border border-emerald-500/20 shadow-md z-10">
+                                            +${offer.reward.toFixed(2)}
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col justify-start px-1">
+                                        <h4 className="font-black text-[13px] line-clamp-1 group-hover:text-indigo-600 transition-colors uppercase tracking-tight leading-tight">{offer.title}</h4>
+                                        <p className="text-[10px] text-slate-500 line-clamp-1 leading-none opacity-90 group-hover:opacity-100 transition-opacity">
+                                            <span className="font-bold text-indigo-500/80 mr-1 uppercase">[{offer.cat}]</span>
+                                            High paying task for active users.
+                                        </p>
+                                    </div>
+                                    <div className="mt-1">
+                                        <div className="w-full bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 py-1 rounded-lg font-black text-[12px] uppercase tracking-wider block text-center transition-all transform hover:scale-[1.02]">
+                                            Start Earning
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* CTA Section */}
-            <section className="py-20 bg-gradient-primary text-white">
-                <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        Ready to Start Earning?
-                    </h2>
-                    <p className="text-xl mb-8">
-                        Join thousands of users already making money online
-                    </p>
-                    <a
-                        href="/register"
-                        className="inline-block bg-white text-purple-600 font-bold px-8 py-4 rounded-full hover:scale-105 transition-transform text-lg"
-                    >
-                        Sign Up Now - It&apos;s Free!
-                    </a>
-                </div>
-            </section>
+                {/* ৩. Payment Methods */}
+                <section className="py-12 md:py-16 relative z-10 border-t border-slate-100 text-center overflow-hidden">
+                    {/* Animated Background Logos Layer */}
+                    <div className="absolute inset-0 -z-10 pointer-events-none">
+                        {/* PayPal Floating */}
+                        <div className="absolute top-[10%] left-[5%] animate-floating-slow">
+                            <Image src="/images/payments/paypal.png" alt="" width={100} height={50} className="drop-shadow-sm object-contain" unoptimized />
+                        </div>
+                        {/* Mastercard Floating */}
+                        <div className="absolute bottom-[15%] left-[82%] animate-floating">
+                            <Image src="/images/payments/mastercard.png" alt="" width={90} height={50} className="drop-shadow-sm object-contain" unoptimized />
+                        </div>
+                        {/* Bitcoin Floating */}
+                        <div className="absolute top-[20%] left-[85%] animate-floating-fast">
+                            <Image src="/images/payments/bitcoin.png" alt="" width={70} height={70} className="drop-shadow-md object-contain" unoptimized />
+                        </div>
+                        {/* USDT Floating */}
+                        <div className="absolute bottom-[20%] left-[10%] animate-floating-slow">
+                            <Image src="/images/payments/usdt.png" alt="" width={70} height={70} className="drop-shadow-md object-contain" unoptimized />
+                        </div>
+                        {/* Litecoin Floating */}
+                        <div className="absolute top-[60%] left-[5%] animate-floating">
+                            <Image src="/images/payments/litecoin.png" alt="" width={65} height={65} className="drop-shadow-md object-contain" unoptimized />
+                        </div>
+                        {/* GiftCard Floating */}
+                        <div className="absolute bottom-[2%] left-[75%] animate-floating-slow">
+                            <Image src="/images/payments/giftcard.png" alt="" width={110} height={70} className="drop-shadow-lg object-contain" unoptimized />
+                        </div>
+                    </div>
 
-            {/* Footer */}
-            <footer className="bg-[var(--card)] border-t border-[var(--muted)]/20 py-12">
+                    <div className="absolute inset-0 bg-green-100/80 -z-20 border-y border-green-200/50"></div>
+                    <div className="container mx-auto px-4">
+                        <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Multiple Withdrawal Options</h2>
+                        <div className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-5xl mx-auto">
+                            {[
+                                { name: 'Visa/Mastercard', icon: '💳' },
+                                { name: 'PayPal', icon: '💰' },
+                                { name: 'Bitcoin', icon: '₿' },
+                                { name: 'Ethereum', icon: 'Ξ' },
+                                { name: 'USDT', icon: '💵' },
+                                { name: 'Gift Cards', icon: '🎁' },
+                                { name: 'Mobile Money', icon: '📱' },
+                                { name: 'Bank Transfer', icon: '🏦' }
+                            ].map((method, index) => (
+                                <span key={index} className="bg-white/80 border border-white/50 px-6 py-2 rounded-2xl font-bold text-slate-700 shadow-sm hover:bg-white transition-all text-sm backdrop-blur-md">
+                                    <span className="mr-2">{method.icon}</span>{method.name}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* ৩.১ Latest Blog Posts */}
+                <section className="py-8 md:py-12 relative z-10 border-t border-slate-100">
+                    <div className="absolute inset-0 bg-white/30 backdrop-blur-sm -z-10"></div>
+                    <div className="container mx-auto px-4">
+                        <div className="flex items-center justify-between mb-8">
+                            <h2 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tight">📝 Latest from Blog</h2>
+                            <Link href="/blog" className="text-sm font-bold text-indigo-600 hover:text-indigo-500">
+                                See All Blog →
+                            </Link>
+                        </div>
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            {[1, 2, 3, 4].map((i) => (
+                                <Link key={i} href="/blog" className="glass-card p-4 rounded-3xl bg-white/60 border border-white/50 group hover:scale-[1.02] transition-all">
+                                    <div className="aspect-video bg-indigo-50 rounded-2xl mb-4 overflow-hidden flex items-center justify-center text-4xl group-hover:bg-indigo-100 transition-colors">
+                                        📰
+                                    </div>
+                                    <p className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-2">Category Name</p>
+                                    <h4 className="font-black text-slate-900 line-clamp-2 leading-tight group-hover:text-indigo-600 transition-colors">How to earn your first $100 with TaskSpot</h4>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* ৩.২ Ready to Start Earning CTA */}
+                <section className="py-16 md:py-24 relative overflow-hidden bg-indigo-600 text-white text-center">
+                    <div className="absolute inset-0 opacity-20">
+                        <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+                        <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-400 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
+                    </div>
+                    <div className="container mx-auto px-4 relative z-10">
+                        <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">Ready to Start Earning?</h2>
+                        <p className="text-xl md:text-2xl text-indigo-100 mb-10 max-w-2xl mx-auto font-medium">Join thousands of users already making money online. Your first reward is just minutes away!</p>
+                        <Link href="/register" className="inline-block bg-white text-indigo-600 px-10 py-4 md:px-12 md:py-5 text-xl font-black rounded-2xl shadow-2xl hover:scale-105 transition-all">Sign Up Now - It's Free!</Link>
+                    </div>
+                </section>
+            </main>
+
+            {/* ৪. Footer */}
+            <footer className="relative z-10 border-t border-slate-100 py-4 md:py-6">
+                <div className="absolute inset-0 bg-white/60 backdrop-blur-md -z-10"></div>
                 <div className="container mx-auto px-4">
-                    <div className="grid md:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
                         <div>
-                            <h3 className="font-bold text-lg mb-4">TaskSpot</h3>
-                            <p className="text-sm text-[var(--muted)]">
-                                Earn rewards by completing simple tasks from trusted advertisers.
-                            </p>
+                            <h3 className="font-black text-xl mb-6 text-indigo-600 tracking-tight uppercase">TaskSpot</h3>
+                            <p className="text-slate-500 text-sm leading-relaxed">Earn rewards by completing simple tasks from trusted advertisers.</p>
                         </div>
-
                         <div>
-                            <h4 className="font-semibold mb-4">Company</h4>
-                            <ul className="space-y-2 text-sm text-[var(--muted)]">
-                                <li><a href="/about">About Us</a></li>
-                                <li><a href="/contact">Contact</a></li>
-                                <li><a href="/faq">FAQ</a></li>
-                                <li><a href="/blog">Blog</a></li>
+                            <h4 className="font-bold mb-6 text-slate-900 uppercase text-xs tracking-widest">Company</h4>
+                            <ul className="space-y-4 text-sm font-bold text-slate-500">
+                                <li><Link href="/about" className="hover:text-indigo-600 transition-all">About Us</Link></li>
+                                <li><Link href="/contact" className="hover:text-indigo-600 transition-all">Contact</Link></li>
+                                <li><Link href="/faq" className="hover:text-indigo-600 transition-all">FAQ</Link></li>
+                                <li><Link href="/blog" className="hover:text-indigo-600 transition-all">Blog</Link></li>
                             </ul>
                         </div>
-
                         <div>
-                            <h4 className="font-semibold mb-4">Legal</h4>
-                            <ul className="space-y-2 text-sm text-[var(--muted)]">
-                                <li><a href="/terms">Terms & Conditions</a></li>
-                                <li><a href="/privacy">Privacy Policy</a></li>
-                                <li><a href="/disclaimer">Disclaimer</a></li>
+                            <h4 className="font-bold mb-6 text-slate-900 uppercase text-xs tracking-widest">Legal</h4>
+                            <ul className="space-y-4 text-sm font-bold text-slate-500">
+                                <li><Link href="/terms" className="hover:text-indigo-600 transition-all">Terms & Conditions</Link></li>
+                                <li><Link href="/privacy" className="hover:text-indigo-600 transition-all">Privacy Policy</Link></li>
+                                <li><Link href="/disclaimer" className="hover:text-indigo-600 transition-all">Disclaimer</Link></li>
                             </ul>
                         </div>
-
                         <div>
-                            <h4 className="font-semibold mb-4">Support</h4>
-                            <ul className="space-y-2 text-sm text-[var(--muted)]">
-                                <li><a href="/help">Help Center</a></li>
-                                <li><a href="/support">Contact Support</a></li>
-                                <li className="pt-2 text-xs">Email: <a href="mailto:support@taskspot.site" className="hover:text-indigo-600 transition-colors">support@taskspot.site</a></li>
+                            <h4 className="font-bold mb-6 text-slate-900 uppercase text-xs tracking-widest">Support</h4>
+                            <ul className="space-y-4 text-sm font-bold text-slate-500">
+                                <li><Link href="/help" className="hover:text-indigo-600 transition-all">Help Center</Link></li>
+                                <li><Link href="/support" className="hover:text-indigo-600 transition-all">Contact Support</Link></li>
+                                <li className="text-[10px] text-slate-400 lowercase pt-2">Email: <a href="mailto:support@taskspot.site" className="hover:text-indigo-600 transition-colors">support@taskspot.site</a></li>
                             </ul>
                         </div>
                     </div>
-
-                    <div className="mt-8 pt-8 border-t border-[var(--muted)]/20 text-center text-sm text-[var(--muted)]">
-                        <p>&copy; 2025 TaskSpot. All rights reserved.</p>
+                    <div className="mt-6 pt-4 border-t border-slate-50 text-center text-[10px] font-black text-slate-300 uppercase tracking-widest">
+                        <p>&copy; 2026 TaskSpot Official Platform.</p>
                     </div>
                 </div>
             </footer>
