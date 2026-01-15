@@ -161,27 +161,27 @@ export default function HomePage() {
                     <div className="absolute inset-0 -z-10 pointer-events-none">
                         {/* PayPal Floating */}
                         <div className="absolute top-[10%] left-[5%] animate-floating-slow">
-                            <Image src="/images/payments/paypal.png" alt="" width={100} height={50} className="drop-shadow-sm object-contain" unoptimized />
+                            <Image src="/images/payments/paypal.png" alt="PayPal" width={100} height={50} className="drop-shadow-sm object-contain" unoptimized />
                         </div>
                         {/* Mastercard Floating */}
                         <div className="absolute bottom-[15%] left-[82%] animate-floating">
-                            <Image src="/images/payments/mastercard.png" alt="" width={90} height={50} className="drop-shadow-sm object-contain" unoptimized />
+                            <Image src="/images/payments/mastercard.png" alt="Mastercard" width={90} height={50} className="drop-shadow-sm object-contain" unoptimized />
                         </div>
                         {/* Bitcoin Floating */}
                         <div className="absolute top-[20%] left-[85%] animate-floating-fast">
-                            <Image src="/images/payments/bitcoin.png" alt="" width={70} height={70} className="drop-shadow-md object-contain" unoptimized />
+                            <Image src="/images/payments/bitcoin.png" alt="Bitcoin" width={70} height={70} className="drop-shadow-md object-contain" unoptimized />
                         </div>
                         {/* USDT Floating */}
                         <div className="absolute bottom-[20%] left-[10%] animate-floating-slow">
-                            <Image src="/images/payments/usdt.png" alt="" width={70} height={70} className="drop-shadow-md object-contain" unoptimized />
+                            <Image src="/images/payments/usdt.png" alt="USDT" width={70} height={70} className="drop-shadow-md object-contain" unoptimized />
                         </div>
                         {/* Litecoin Floating */}
                         <div className="absolute top-[60%] left-[5%] animate-floating">
-                            <Image src="/images/payments/litecoin.png" alt="" width={65} height={65} className="drop-shadow-md object-contain" unoptimized />
+                            <Image src="/images/payments/litecoin.png" alt="Litecoin" width={65} height={65} className="drop-shadow-md object-contain" unoptimized />
                         </div>
                         {/* GiftCard Floating */}
                         <div className="absolute bottom-[2%] left-[75%] animate-floating-slow">
-                            <Image src="/images/payments/giftcard.png" alt="" width={110} height={70} className="drop-shadow-lg object-contain" unoptimized />
+                            <Image src="/images/payments/giftcard.png" alt="Gift Card" width={110} height={70} className="drop-shadow-lg object-contain" unoptimized />
                         </div>
                     </div>
 
