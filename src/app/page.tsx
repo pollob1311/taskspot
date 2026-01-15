@@ -1,7 +1,7 @@
 'use client';
 
 import { ShatterText } from '@/components/ShatterText';
-import { ChevronRight, Star, Zap, Layout, ShieldCheck, Diamond } from 'lucide-react';
+import { Zap, Diamond } from 'lucide-react';
 import { BackgroundParticles } from '@/components/BackgroundParticles';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -12,7 +12,7 @@ export default function HomePage() {
             <BackgroundParticles />
 
             <main className="relative z-10">
-                {/* ১. Hero Section */}
+                {/* 1. Hero Section */}
                 <section className="min-h-[70vh] flex items-center justify-center py-4 md:py-8">
                     <div className="container mx-auto px-4 md:px-8">
                         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16">
@@ -78,7 +78,7 @@ export default function HomePage() {
                     </div>
                 </section>
 
-                {/* ২. How It Works Section */}
+                {/* 2. How It Works Section */}
                 <section id="how-it-works" className="py-4 md:py-6 relative z-10">
                     <div className="absolute inset-0 bg-slate-50/40 backdrop-blur-sm -z-10"></div>
                     <div className="container mx-auto px-4 text-center">
@@ -103,7 +103,7 @@ export default function HomePage() {
                     </div>
                 </section>
 
-                {/* ২.১ Running Featured Offers */}
+                {/* 2.1 Running Featured Offers */}
                 <section className="py-8 md:py-12 relative z-10 border-t border-slate-100">
                     <div className="absolute inset-0 bg-white/30 backdrop-blur-sm -z-10"></div>
                     <div className="container mx-auto px-4">
@@ -155,7 +155,7 @@ export default function HomePage() {
                     </div>
                 </section>
 
-                {/* ৩. Payment Methods */}
+                {/* 3. Payment Methods */}
                 <section className="py-12 md:py-16 relative z-10 border-t border-slate-100 text-center overflow-hidden">
                     {/* Animated Background Logos Layer */}
                     <div className="absolute inset-0 -z-10 pointer-events-none">
@@ -207,7 +207,7 @@ export default function HomePage() {
                     </div>
                 </section>
 
-                {/* ৩.১ Latest Blog Posts */}
+                {/* 3.1 Latest Blog Posts */}
                 <section className="py-8 md:py-12 relative z-10 border-t border-slate-100">
                     <div className="absolute inset-0 bg-white/30 backdrop-blur-sm -z-10"></div>
                     <div className="container mx-auto px-4">
@@ -231,7 +231,7 @@ export default function HomePage() {
                     </div>
                 </section>
 
-                {/* ৩.২ Ready to Start Earning CTA */}
+                {/* 3.2 Ready to Start Earning CTA */}
                 <section className="py-16 md:py-24 relative overflow-hidden bg-indigo-600 text-white text-center">
                     <div className="absolute inset-0 opacity-20">
                         <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
@@ -240,12 +240,12 @@ export default function HomePage() {
                     <div className="container mx-auto px-4 relative z-10">
                         <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">Ready to Start Earning?</h2>
                         <p className="text-xl md:text-2xl text-indigo-100 mb-10 max-w-2xl mx-auto font-medium">Join thousands of users already making money online. Your first reward is just minutes away!</p>
-                        <Link href="/register" className="inline-block bg-white text-indigo-600 px-10 py-4 md:px-12 md:py-5 text-xl font-black rounded-2xl shadow-2xl hover:scale-105 transition-all">Sign Up Now - It's Free!</Link>
+                        <Link href="/register" className="inline-block bg-white text-indigo-600 px-10 py-4 md:px-12 md:py-5 text-xl font-black rounded-2xl shadow-2xl hover:scale-105 transition-all">Sign Up Now - It&apos;s Free!</Link>
                     </div>
                 </section>
             </main>
 
-            {/* ৪. Footer */}
+            {/* 4. Footer */}
             <footer className="relative z-10 border-t border-slate-100 py-4 md:py-6">
                 <div className="absolute inset-0 bg-white/60 backdrop-blur-md -z-10"></div>
                 <div className="container mx-auto px-4">
@@ -266,7 +266,7 @@ export default function HomePage() {
                         <div>
                             <h4 className="font-bold mb-6 text-slate-900 uppercase text-xs tracking-widest">Legal</h4>
                             <ul className="space-y-4 text-sm font-bold text-slate-500">
-                                <li><Link href="/terms" className="hover:text-indigo-600 transition-all">Terms & Conditions</Link></li>
+                                <li><Link href="/terms" className="hover:text-indigo-600 transition-all">Terms &amp; Conditions</Link></li>
                                 <li><Link href="/privacy" className="hover:text-indigo-600 transition-all">Privacy Policy</Link></li>
                                 <li><Link href="/disclaimer" className="hover:text-indigo-600 transition-all">Disclaimer</Link></li>
                             </ul>
@@ -281,7 +281,7 @@ export default function HomePage() {
                         </div>
                     </div>
                     <div className="mt-6 pt-4 border-t border-slate-50 text-center text-[10px] font-black text-slate-300 uppercase tracking-widest">
-                        <p>&copy; 2026 TaskSpot Official Platform.</p>
+                        <p>© 2026 TaskSpot Official Platform.</p>
                     </div>
                 </div>
             </footer>
