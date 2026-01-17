@@ -1,14 +1,18 @@
 'use client';
 
 import { ShatterText } from '@/components/ShatterText';
-import { Zap, Diamond } from 'lucide-react';
+import { Zap, Diamond, ChevronDown, ChevronUp } from 'lucide-react';
 import { BackgroundParticles } from '@/components/BackgroundParticles';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { blogPosts } from '@/lib/blog-data';
 
 export default function HomePage() {
-    const router = useRouter(); const handleSignIn = (e: React.FormEvent) => {
+    const router = useRouter();
+
+    const handleSignIn = (e: React.FormEvent) => {
         e.preventDefault();
         router.push('/login');
     };
@@ -18,7 +22,7 @@ export default function HomePage() {
             <BackgroundParticles />
             <main className="relative z-10">
                 {/* 1. Hero Section - Natural Interaction Model */}
-                <section className="min-h-[70vh] flex items-center justify-center py-4 md:py-8 relative z-50">
+                <section className="min-h-[70vh] flex items-center justify-center py-4 md:py-8 relative z-50 bg-gradient-to-b from-indigo-200/40 via-purple-100/40 to-transparent">
                     <div className="container mx-auto px-4 md:px-8">
                         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16">
                             {/* Left: Sign-In Box */}
@@ -87,35 +91,27 @@ export default function HomePage() {
                 <section id="how-it-works" className="py-4 md:py-6 relative overflow-hidden">
                     <div className="absolute inset-0 bg-slate-50/40 backdrop-blur-sm z-0"></div>
                     <div className="container mx-auto px-4 text-center relative z-20">
-                        <h2 className="text-4xl font-black text-slate-900 mb-6 uppercase">How It Works</h2>
-                        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                            <div className="bg-white p-6 rounded-[30px] shadow-sm">
-                                <div className="text-4xl mb-3">📝</div>
-                                <h3 className="text-xl font-bold mb-2 text-slate-900">1. Register</h3>
-                                <p className="text-slate-500 text-sm font-medium leading-relaxed">Create your free account in under 2 minutes.</p>
-                            </div>
-                            <div className="bg-white p-6 rounded-[30px] shadow-sm">
-                                <div className="text-4xl mb-3">🎯</div>
-                                <h3 className="text-xl font-bold mb-2 text-slate-900">2. Complete Offers</h3>
-                                <p className="text-slate-500 text-sm font-medium leading-relaxed">Browse hundreds of offers and complete the ones you like.</p>
-                            </div>
-                            <div className="bg-white p-6 rounded-[30px] shadow-sm">
-                                <div className="text-4xl mb-3">💸</div>
-                                <h3 className="text-xl font-bold mb-2 text-slate-900">3. Get Paid</h3>
-                                <p className="text-slate-500 text-sm font-medium text-center">Withdraw via PayPal, crypto, or gift cards.</p>
-                            </div>
-                        </div>
+                        <a
+                            href="/how-it-works"
+                            className="text-4xl font-black text-slate-900 mb-6 uppercase cursor-pointer select-none inline-flex items-center gap-3 hover:text-indigo-600 transition-colors"
+                            style={{ position: 'relative', zIndex: 999999 }}
+                        >
+                            How It Works <sup className="text-xs text-indigo-500 font-bold">New Page ↗</sup>
+                        </a>
+                        <p className="text-slate-500 text-sm font-bold max-w-xl mx-auto">
+                            Click above to learn how you can start earning in 3 simple steps.
+                        </p>
                     </div>
                 </section>
 
                 {/* 2.1 Running Featured Offers */}
-                <section className="py-8 md:py-12 relative overflow-hidden border-t border-slate-100">
-                    <div className="absolute inset-0 bg-white/30 backdrop-blur-sm z-0"></div>
+                <section className="py-8 md:py-12 relative overflow-hidden border-t border-slate-500" style={{ backgroundColor: '#666666' }}>
+                    <div className="absolute inset-0 bg-black/10 backdrop-blur-sm z-0"></div>
                     <div className="container mx-auto px-4 relative z-20">
                         <div className="flex items-center justify-between mb-8">
                             <div className="flex items-center gap-2">
-                                <Zap className="w-5 h-5 text-indigo-500 fill-indigo-500" />
-                                <h2 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tight">Running Featured Offers</h2>
+                                <Zap className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                                <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">Running Featured Offers</h2>
                             </div>
                             <a href="/register" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hidden sm:flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-indigo-100 hover:scale-105 transition-all">
                                 <Diamond className="w-3 h-3" /> REGISTER TO ACCESS
@@ -161,7 +157,7 @@ export default function HomePage() {
                 </section>
 
                 {/* 3. Payment Methods */}
-                <section className="py-12 md:py-16 relative overflow-hidden border-t border-slate-100 text-center">
+                <section className="py-12 md:py-16 relative overflow-hidden border-t border-slate-100 text-center bg-indigo-600">
                     {/* Animated Background Logos Layer */}
                     <div className="absolute inset-0 z-0 pointer-events-none">
                         {/* PayPal Floating */}
@@ -192,7 +188,7 @@ export default function HomePage() {
 
 
                     <div className="container mx-auto px-4 relative z-20">
-                        <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Multiple Withdrawal Options</h2>
+                        <h2 className="text-3xl font-black text-white mb-6 uppercase tracking-tight">Multiple Withdrawal Options</h2>
                         <div className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-5xl mx-auto">
                             {[
                                 { name: 'Visa/Mastercard', icon: '💳' },
@@ -213,23 +209,34 @@ export default function HomePage() {
                 </section>
 
                 {/* 3.1 Latest Blog Posts */}
-                <section className="py-8 md:py-12 relative overflow-hidden border-t border-slate-100">
-                    <div className="absolute inset-0 bg-white/30 backdrop-blur-sm z-0"></div>
+                <section className="py-8 md:py-12 relative overflow-hidden border-t border-slate-500 bg-slate-600 z-[30]">
+                    <div className="absolute inset-0 bg-black/20 backdrop-blur-sm z-0"></div>
                     <div className="container mx-auto px-4 relative z-20">
                         <div className="flex items-center justify-between mb-8">
-                            <h2 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tight">📝 Latest from Blog</h2>
-                            <a href="/blog" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="text-sm font-bold text-indigo-600 hover:text-indigo-500">
+                            <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">📝 Latest from Blog</h2>
+                            <a href="/blog" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="text-sm font-bold text-indigo-400 hover:text-indigo-300">
                                 See All Blog →
                             </a>
                         </div>
                         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            {[1, 2, 3, 4].map((i) => (
-                                <a key={i} href="/blog" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="glass-card p-4 rounded-3xl bg-white/60 border border-white/50 group hover:scale-[1.02] transition-all">
-                                    <div className="aspect-video bg-indigo-50 rounded-2xl mb-4 overflow-hidden flex items-center justify-center text-4xl group-hover:bg-indigo-100 transition-colors">
-                                        📰
+                            {blogPosts.slice(0, 4).map((post) => (
+                                <a key={post.id} href={`/blog/${post.slug}`} style={{ position: 'relative', zIndex: 999999, cursor: 'pointer', display: 'flex' }} className="glass-card p-6 rounded-3xl bg-white/60 border border-white/50 group hover:scale-[1.02] transition-all flex-col h-full hover:bg-white/80">
+                                    <div className="flex flex-col h-full w-full">
+                                        <div className="mb-4">
+                                            <span className="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-[10px] font-black uppercase tracking-widest group-hover:bg-indigo-100 transition-colors">
+                                                {post.category}
+                                            </span>
+                                        </div>
+                                        <h4 className="text-base font-black text-slate-900 line-clamp-2 leading-tight group-hover:text-indigo-600 transition-colors mb-4">
+                                            {post.title}
+                                        </h4>
+                                        <p className="text-xs text-slate-500 line-clamp-4 leading-relaxed font-medium flex-grow">
+                                            {post.excerpt}
+                                        </p>
+                                        <div className="mt-4 pt-4 border-t border-slate-100/50 flex items-center text-indigo-500 text-[10px] font-bold uppercase tracking-wide group-hover:text-indigo-600">
+                                            Read More <span className="ml-1 transition-transform group-hover:translate-x-1">→</span>
+                                        </div>
                                     </div>
-                                    <p className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-2">Category Name</p>
-                                    <h4 className="font-black text-slate-900 line-clamp-2 leading-tight group-hover:text-indigo-600 transition-colors">How to earn your first $100 with TaskSpot</h4>
                                 </a>
                             ))}
                         </div>
@@ -237,55 +244,56 @@ export default function HomePage() {
                 </section>
 
                 {/* 3.2 Ready to Start Earning CTA */}
-                <section className="py-16 md:py-24 relative overflow-hidden bg-indigo-600 text-white text-center">
+                {/* 3.2 Ready to Start Earning CTA */}
+                <section className="py-12 md:py-16 relative overflow-hidden bg-indigo-600 text-white text-center">
                     <div className="absolute inset-0 opacity-20">
                         <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
                         <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-400 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
                     </div>
                     <div className="container mx-auto px-4 relative z-10">
-                        <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">Ready to Start Earning?</h2>
-                        <p className="text-xl md:text-2xl text-indigo-100 mb-10 max-w-2xl mx-auto font-medium">Join thousands of users already making money online. Your first reward is just minutes away!</p>
-                        <a href="/register" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="inline-block bg-white text-indigo-600 px-10 py-4 md:px-12 md:py-5 text-xl font-black rounded-2xl shadow-2xl hover:scale-105 transition-all">Sign Up Now - It&apos;s Free!</a>
+                        <h2 className="text-3xl md:text-4xl font-black mb-4 tracking-tight">Ready to Start Earning?</h2>
+                        <p className="text-lg md:text-xl text-indigo-100 mb-8 max-w-2xl mx-auto font-medium">Join thousands of users already making money online. Your first reward is just minutes away!</p>
+                        <a href="/register" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="inline-block bg-white text-indigo-600 px-8 py-3 md:px-10 md:py-4 text-lg font-black rounded-2xl shadow-xl hover:scale-105 transition-all">Sign Up Now - It&apos;s Free!</a>
                     </div>
                 </section>
             </main>
 
             {/* 4. Footer - Natural Interaction Model */}
-            <footer className="relative z-[60] border-t border-slate-100 py-4 md:py-6">
-                <div className="absolute inset-0 bg-white/60 backdrop-blur-md -z-10"></div>
+            <footer className="relative z-[60] border-t border-slate-700 py-4 md:py-6 bg-slate-800">
+                <div className="absolute inset-0 bg-black/20 backdrop-blur-md -z-10"></div>
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
                         <div>
-                            <h3 className="font-black text-xl mb-6 text-indigo-600 tracking-tight uppercase">TaskSpot</h3>
-                            <p className="text-slate-500 text-sm leading-relaxed">Earn rewards by completing simple tasks from trusted advertisers.</p>
+                            <h3 className="font-black text-xl mb-6 text-indigo-400 tracking-tight uppercase">TaskSpot</h3>
+                            <p className="text-slate-400 text-sm leading-relaxed">Earn rewards by completing simple tasks from trusted advertisers.</p>
                         </div>
                         <div>
-                            <h4 className="font-bold mb-6 text-slate-900 uppercase text-xs tracking-widest">Company</h4>
-                            <ul className="space-y-4 text-sm font-bold text-slate-500">
-                                <li><a href="/about" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">About Us</a></li>
-                                <li><a href="/contact" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Contact</a></li>
-                                <li><a href="/faq" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">FAQ</a></li>
-                                <li><a href="/blog" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Blog</a></li>
+                            <h4 className="font-bold mb-6 text-white uppercase text-xs tracking-widest">Company</h4>
+                            <ul className="space-y-4 text-sm font-bold text-slate-400">
+                                <li><a href="/about" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-400 transition-all">About Us</a></li>
+                                <li><a href="/contact" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-400 transition-all">Contact</a></li>
+                                <li><a href="/faq" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-400 transition-all">FAQ</a></li>
+                                <li><a href="/blog" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-400 transition-all">Blog</a></li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="font-bold mb-6 text-slate-900 uppercase text-xs tracking-widest">Legal</h4>
-                            <ul className="space-y-4 text-sm font-bold text-slate-500">
-                                <li><a href="/terms" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Terms &amp; Conditions</a></li>
-                                <li><a href="/privacy" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Privacy Policy</a></li>
-                                <li><a href="/disclaimer" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Disclaimer</a></li>
+                            <h4 className="font-bold mb-6 text-white uppercase text-xs tracking-widest">Legal</h4>
+                            <ul className="space-y-4 text-sm font-bold text-slate-400">
+                                <li><a href="/terms" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-400 transition-all">Terms &amp; Conditions</a></li>
+                                <li><a href="/privacy" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-400 transition-all">Privacy Policy</a></li>
+                                <li><a href="/disclaimer" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-400 transition-all">Disclaimer</a></li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="font-bold mb-6 text-slate-900 uppercase text-xs tracking-widest">Support</h4>
-                            <ul className="space-y-4 text-sm font-bold text-slate-500">
-                                <li><a href="/help" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Help Center</a></li>
-                                <li><a href="/support" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Contact Support</a></li>
-                                <li className="text-[10px] text-slate-400 lowercase pt-2">Email: <a href="mailto:support@taskspot.site" className="hover:text-indigo-600 transition-colors">support@taskspot.site</a></li>
+                            <h4 className="font-bold mb-6 text-white uppercase text-xs tracking-widest">Support</h4>
+                            <ul className="space-y-4 text-sm font-bold text-slate-400">
+                                <li><a href="/help" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-400 transition-all">Help Center</a></li>
+                                <li><a href="/support" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-400 transition-all">Contact Support</a></li>
+                                <li className="text-[10px] text-slate-500 lowercase pt-2">Email: <a href="mailto:support@taskspot.site" className="hover:text-indigo-400 transition-colors">support@taskspot.site</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div className="mt-6 pt-4 border-t border-slate-50 text-center text-[10px] font-black text-slate-300 uppercase tracking-widest">
+                    <div className="mt-6 pt-4 border-t border-slate-700 text-center text-[10px] font-black text-slate-500 uppercase tracking-widest">
                         <p>© 2026 TaskSpot Official Platform.</p>
                     </div>
                 </div>
