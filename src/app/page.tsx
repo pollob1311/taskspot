@@ -14,16 +14,16 @@ export default function HomePage() {
     };
 
     return (
-        <div className="min-h-screen relative overflow-x-hidden">
+        <div className="min-h-screen relative overflow-x-hidden bg-slate-50/50 isolate">
             <BackgroundParticles />
             <main className="relative z-10">
-                {/* 1. Hero Section - Nuclear Interaction Fix Applied */}
-                <section className="min-h-[70vh] flex items-center justify-center py-4 md:py-8 relative z-50 pointer-events-none">
+                {/* 1. Hero Section - Natural Interaction Model */}
+                <section className="min-h-[70vh] flex items-center justify-center py-4 md:py-8 relative z-50">
                     <div className="container mx-auto px-4 md:px-8">
                         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16">
                             {/* Left: Sign-In Box */}
-                            <div className="w-full max-w-[400px] lg:min-w-[360px] xl:min-w-[400px] order-2 lg:order-1 flex-shrink-0 relative z-[60] pointer-events-auto">
-                                <div className="p-8 rounded-[40px] shadow-2xl border border-slate-100 bg-white">
+                            <div className="w-full max-w-[400px] lg:min-w-[360px] xl:min-w-[400px] order-2 lg:order-1 flex-shrink-0 relative z-[9999]">
+                                <div className="glass-card p-8 rounded-[40px] shadow-2xl border border-slate-100 backdrop-blur-xl bg-white/90">
                                     <h3 className="text-xl font-black text-slate-900 mb-6 text-center lg:text-left">Welcome Back!</h3>
                                     <form onSubmit={handleSignIn} className="space-y-4">
                                         <div className="space-y-4 text-left">
@@ -36,11 +36,11 @@ export default function HomePage() {
                                                 <input type="password" placeholder="••••••••" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" />
                                             </div>
                                         </div>
-                                        <Link href="/login" className="block w-full text-center bg-indigo-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95">
+                                        <a href="/login" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="block w-full text-center bg-indigo-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95">
                                             Sign In
-                                        </Link>
+                                        </a>
                                         <div className="text-center pt-2">
-                                            <Link href="/register" className="text-sm font-bold text-indigo-600 hover:underline">Create Account →</Link>
+                                            <a href="/register" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="text-sm font-bold text-indigo-600 hover:underline">Create Account →</a>
                                         </div>
                                     </form>
                                 </div>
@@ -64,9 +64,9 @@ export default function HomePage() {
                                     Get paid in <span className="text-cyan-500 font-black">Crypto</span>, <span className="text-purple-500 font-black">Cards</span>, or <span className="text-indigo-600 font-black">Cash</span>.
                                 </p>
 
-                                <div className="flex flex-wrap gap-4 justify-center lg:justify-end mb-10 relative z-[60] pointer-events-auto">
-                                    <Link href="/register" className="bg-indigo-600 text-white px-10 py-4 md:px-12 md:py-5 text-lg md:text-xl font-black rounded-2xl shadow-xl hover:scale-105 transition-all">Start Earning</Link>
-                                    <Link href="/blog" className="glass-card bg-white px-8 py-4 md:px-10 md:py-5 text-lg rounded-2xl border border-slate-200 font-bold text-slate-700 hover:bg-slate-50">Read Blog</Link>
+                                <div className="flex flex-wrap gap-4 justify-center lg:justify-end mb-10 relative z-[9999]">
+                                    <a href="/register" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="bg-indigo-600 text-white px-10 py-4 md:px-12 md:py-5 text-lg md:text-xl font-black rounded-2xl shadow-xl hover:scale-105 transition-all">Start Earning</a>
+                                    <a href="/blog" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="glass-card bg-white px-8 py-4 md:px-10 md:py-5 text-lg rounded-2xl border border-slate-200 font-bold text-slate-700 hover:bg-slate-50">Read Blog</a>
                                 </div>
 
                                 <div className="flex flex-wrap justify-center lg:justify-end gap-6 md:gap-10 text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest">
@@ -117,9 +117,9 @@ export default function HomePage() {
                                 <Zap className="w-5 h-5 text-indigo-500 fill-indigo-500" />
                                 <h2 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tight">Running Featured Offers</h2>
                             </div>
-                            <Link href="/register" className="hidden sm:flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-indigo-100 hover:scale-105 transition-all">
+                            <a href="/register" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hidden sm:flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-indigo-100 hover:scale-105 transition-all">
                                 <Diamond className="w-3 h-3" /> REGISTER TO ACCESS
-                            </Link>
+                            </a>
                         </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
@@ -135,7 +135,7 @@ export default function HomePage() {
                                 { id: 9, title: 'Beta Testing', reward: 2.80, cat: 'APP', img: '🛠️' },
                                 { id: 10, title: 'Daily Reward', reward: 0.50, cat: 'BONUS', img: '🎁' }
                             ].map((offer) => (
-                                <Link key={offer.id} href="/register" className="glass-card p-2 rounded-2xl card-hover border border-white/50 shadow-sm relative overflow-hidden group flex flex-col h-full min-h-[190px] bg-white/60">
+                                <a key={offer.id} href="/register" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="glass-card p-2 rounded-2xl card-hover border border-white/50 shadow-sm relative overflow-hidden group flex flex-col h-full min-h-[190px] bg-white/60">
                                     <div className="relative w-full h-32 -mt-2 -mx-2 mb-2 overflow-hidden rounded-t-2xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center text-4xl">
                                         {offer.img}
                                         <div className="absolute top-2 right-2 font-mono font-bold text-emerald-600 bg-white/95 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-[13px] border border-emerald-500/20 shadow-md z-10">
@@ -154,7 +154,7 @@ export default function HomePage() {
                                             Start Earning
                                         </div>
                                     </div>
-                                </Link>
+                                </a >
                             ))}
                         </div>
                     </div>
@@ -218,19 +218,19 @@ export default function HomePage() {
                     <div className="container mx-auto px-4 relative z-20">
                         <div className="flex items-center justify-between mb-8">
                             <h2 className="text-2xl md:text-3xl font-black text-slate-900 uppercase tracking-tight">📝 Latest from Blog</h2>
-                            <Link href="/blog" className="text-sm font-bold text-indigo-600 hover:text-indigo-500">
+                            <a href="/blog" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="text-sm font-bold text-indigo-600 hover:text-indigo-500">
                                 See All Blog →
-                            </Link>
+                            </a>
                         </div>
                         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             {[1, 2, 3, 4].map((i) => (
-                                <Link key={i} href="/blog" className="glass-card p-4 rounded-3xl bg-white/60 border border-white/50 group hover:scale-[1.02] transition-all">
+                                <a key={i} href="/blog" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="glass-card p-4 rounded-3xl bg-white/60 border border-white/50 group hover:scale-[1.02] transition-all">
                                     <div className="aspect-video bg-indigo-50 rounded-2xl mb-4 overflow-hidden flex items-center justify-center text-4xl group-hover:bg-indigo-100 transition-colors">
                                         📰
                                     </div>
                                     <p className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest mb-2">Category Name</p>
                                     <h4 className="font-black text-slate-900 line-clamp-2 leading-tight group-hover:text-indigo-600 transition-colors">How to earn your first $100 with TaskSpot</h4>
-                                </Link>
+                                </a>
                             ))}
                         </div>
                     </div>
@@ -245,13 +245,13 @@ export default function HomePage() {
                     <div className="container mx-auto px-4 relative z-10">
                         <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">Ready to Start Earning?</h2>
                         <p className="text-xl md:text-2xl text-indigo-100 mb-10 max-w-2xl mx-auto font-medium">Join thousands of users already making money online. Your first reward is just minutes away!</p>
-                        <Link href="/register" className="inline-block bg-white text-indigo-600 px-10 py-4 md:px-12 md:py-5 text-xl font-black rounded-2xl shadow-2xl hover:scale-105 transition-all">Sign Up Now - It&apos;s Free!</Link>
+                        <a href="/register" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="inline-block bg-white text-indigo-600 px-10 py-4 md:px-12 md:py-5 text-xl font-black rounded-2xl shadow-2xl hover:scale-105 transition-all">Sign Up Now - It&apos;s Free!</a>
                     </div>
                 </section>
             </main>
 
-            {/* 4. Footer */}
-            <footer className="relative z-[60] border-t border-slate-100 py-4 md:py-6 pointer-events-auto">
+            {/* 4. Footer - Natural Interaction Model */}
+            <footer className="relative z-[60] border-t border-slate-100 py-4 md:py-6">
                 <div className="absolute inset-0 bg-white/60 backdrop-blur-md -z-10"></div>
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
@@ -262,25 +262,25 @@ export default function HomePage() {
                         <div>
                             <h4 className="font-bold mb-6 text-slate-900 uppercase text-xs tracking-widest">Company</h4>
                             <ul className="space-y-4 text-sm font-bold text-slate-500">
-                                <li><Link href="/about" className="hover:text-indigo-600 transition-all">About Us</Link></li>
-                                <li><Link href="/contact" className="hover:text-indigo-600 transition-all">Contact</Link></li>
-                                <li><Link href="/faq" className="hover:text-indigo-600 transition-all">FAQ</Link></li>
-                                <li><Link href="/blog" className="hover:text-indigo-600 transition-all">Blog</Link></li>
+                                <li><a href="/about" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">About Us</a></li>
+                                <li><a href="/contact" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Contact</a></li>
+                                <li><a href="/faq" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">FAQ</a></li>
+                                <li><a href="/blog" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Blog</a></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="font-bold mb-6 text-slate-900 uppercase text-xs tracking-widest">Legal</h4>
                             <ul className="space-y-4 text-sm font-bold text-slate-500">
-                                <li><Link href="/terms" className="hover:text-indigo-600 transition-all">Terms &amp; Conditions</Link></li>
-                                <li><Link href="/privacy" className="hover:text-indigo-600 transition-all">Privacy Policy</Link></li>
-                                <li><Link href="/disclaimer" className="hover:text-indigo-600 transition-all">Disclaimer</Link></li>
+                                <li><a href="/terms" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Terms &amp; Conditions</a></li>
+                                <li><a href="/privacy" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Privacy Policy</a></li>
+                                <li><a href="/disclaimer" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Disclaimer</a></li>
                             </ul>
                         </div>
                         <div>
                             <h4 className="font-bold mb-6 text-slate-900 uppercase text-xs tracking-widest">Support</h4>
                             <ul className="space-y-4 text-sm font-bold text-slate-500">
-                                <li><Link href="/help" className="hover:text-indigo-600 transition-all">Help Center</Link></li>
-                                <li><Link href="/support" className="hover:text-indigo-600 transition-all">Contact Support</Link></li>
+                                <li><a href="/help" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Help Center</a></li>
+                                <li><a href="/support" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="hover:text-indigo-600 transition-all">Contact Support</a></li>
                                 <li className="text-[10px] text-slate-400 lowercase pt-2">Email: <a href="mailto:support@taskspot.site" className="hover:text-indigo-600 transition-colors">support@taskspot.site</a></li>
                             </ul>
                         </div>

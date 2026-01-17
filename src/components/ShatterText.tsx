@@ -73,7 +73,7 @@ export const ShatterText = () => {
             <h1 className="text-[clamp(1.75rem,5vw,6rem)] font-black tracking-tight flex items-center justify-center gap-x-[1.5vw] lg:gap-x-[2.5vw] text-gray-900 select-none relative z-10 w-full px-2 leading-none overflow-visible">
                 {words.map((word, wordIndex) => {
                     return (
-                        <div key={wordIndex} className="flex items-center gap-x-[1px] sm:gap-x-[2px] relative">
+                        <span key={wordIndex} className="flex items-center gap-x-[1px] sm:gap-x-[2px] relative">
                             {word.split("").map((char) => {
                                 const currentIndex = charCounter++;
                                 return (
@@ -94,7 +94,7 @@ export const ShatterText = () => {
                             {wordIndex === words.length - 1 && (
                                 <span className="w-[0.15em] h-[0.15em] md:w-[0.2em] md:h-[0.2em] rounded-full inline-block dot-cycle border-none bg-neon-purple ml-[0.05em] mr-[0.3em] relative top-[-0.5em]"></span>
                             )}
-                        </div>
+                        </span>
                     );
                 })}
             </h1>

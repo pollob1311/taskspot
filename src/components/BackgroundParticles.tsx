@@ -48,8 +48,8 @@ export const BackgroundParticles: React.FC = () => {
         let activeTimer = 0;
         let respawnTimer = 0;
 
-        const dotCountPerCluster = 40;
-        const clusterCount = 4;
+        const dotCountPerCluster = 20;
+        const clusterCount = 3;
 
         const createDot = (centerX: number, centerY: number): Particle => ({
             x: centerX + (Math.random() - 0.5) * 150,
@@ -327,7 +327,7 @@ export const BackgroundParticles: React.FC = () => {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 pointer-events-none z-[-1]"
+            className="fixed inset-0 pointer-events-none z-[-50]"
             style={{ background: 'transparent', pointerEvents: 'none' }}
         />
     );
