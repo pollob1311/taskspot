@@ -8,7 +8,7 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-white transition-colors duration-300">
+        <div className="min-h-screen bg-[var(--background)] text-[var(--text)] transition-colors duration-300">
             {/* Desktop Sidebar */}
             <div className="hidden lg:block">
                 <Sidebar />

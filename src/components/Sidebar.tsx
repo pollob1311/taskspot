@@ -37,17 +37,18 @@ export default function Sidebar() {
     ];
 
     return (
-        <aside className="fixed left-0 top-0 h-screen w-64 bg-slate-900 dark:bg-black border-r border-slate-800 dark:border-slate-800/50 flex flex-col z-50">
-            <div className="p-6">
-                <Link href="/dashboard" className="flex items-center gap-2">
-                    <Image
-                        src="/taskspot-logo.png"
-                        alt="TaskSpot"
-                        width={120}
-                        height={48}
-                        className="h-10 w-auto object-contain"
-                        priority
-                    />
+        <aside className="fixed left-0 top-0 h-screen w-64 bg-[#CAD5E2] dark:bg-[#364153] border-r border-black/5 dark:border-white/10 flex flex-col z-50 transition-colors duration-300 backdrop-blur-xl">
+            <div className="p-8 flex flex-col items-center justify-center">
+                <Link href="/dashboard" className="relative group">
+                    <div className="relative w-32 h-32 rounded-full border-4 border-indigo-500/20 group-hover:border-indigo-500/40 transition-all duration-300 overflow-hidden shadow-2xl shadow-indigo-500/10">
+                        <Image
+                            src="/sidebar-logo.png"
+                            alt="TaskSpot"
+                            fill
+                            className="object-cover"
+                            priority
+                        />
+                    </div>
                 </Link>
             </div>
 
@@ -58,7 +59,7 @@ export default function Sidebar() {
                         href={item.href}
                         className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all duration-200 group ${item.active
                             ? 'bg-indigo-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.3)]'
-                            : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                            : 'text-[var(--text)]/60 hover:text-[var(--text)] hover:bg-black/5 dark:hover:bg-white/5'
                             }`}
                     >
                         <item.icon className={`w-5 h-5 ${item.active ? 'text-white' : 'text-slate-500 group-hover:text-indigo-400'}`} />
@@ -75,7 +76,7 @@ export default function Sidebar() {
             <div className="p-4 border-t border-slate-800 space-y-4">
                 <button
                     onClick={toggleTheme}
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-[var(--text)]/60 hover:text-[var(--text)] hover:bg-black/5 dark:hover:bg-white/5 transition-all"
                 >
                     {theme === 'dark' ? (
                         <>
@@ -90,13 +91,13 @@ export default function Sidebar() {
                     )}
                 </button>
 
-                <div className="flex items-center gap-3 px-4 py-2 bg-slate-800/50 rounded-2xl">
+                <div className="flex items-center gap-3 px-4 py-2 bg-black/5 dark:bg-white/5 rounded-2xl">
                     <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-xs">
                         {session?.user?.name?.[0]?.toUpperCase() || 'U'}
                     </div>
                     <div className="flex-grow min-w-0">
-                        <div className="text-xs font-black text-white truncate">{session?.user?.name || 'User'}</div>
-                        <div className="text-[10px] text-slate-500 uppercase font-bold">Standard User</div>
+                        <div className="text-xs font-black text-[var(--text)] truncate">{session?.user?.name || 'User'}</div>
+                        <div className="text-[10px] text-[var(--text)]/50 uppercase font-bold">Standard User</div>
                     </div>
                 </div>
             </div>

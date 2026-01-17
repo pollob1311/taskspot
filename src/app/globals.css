@@ -10,10 +10,10 @@
     --success: #10b981;
     --warning: #f59e0b;
     --danger: #ef4444;
-    --background: #f0f7f4;  /* Crisp Light Green Mix */
-    --card: #ffffff;
-    --text: #0f172a;        /* High Contrast Slate 900 */
-    --muted: #64748b;
+    --background: #E4E4E7;
+    --card: 244, 244, 245;  /* Zinc 100 in RGB */
+    --text: #18181b;
+    --muted: #71717a;
   }
 
   .dark {
@@ -23,10 +23,10 @@
     --success: #34d399;
     --warning: #fbbf24;
     --danger: #f87171;
-    --background: #ffffff;  /* White background as requested */
-    --card: #f8fafc;        /* Slate 50 */
-    --text: #0b1121;        /* Dark text for contrast */
-    --muted: #64748b;       /* Slate 500 */
+    --background: #012C22;
+    --card: 1, 53, 41;      /* Deep green in RGB */
+    --text: #f0fdf4;
+    --muted: #34d399;
   }
 
   * {
@@ -46,7 +46,8 @@
 
   /* Glassmorphism card - Adapted for Light Mode */
   .glass-card {
-    @apply backdrop-blur-xl bg-white/70 border border-gray-200 shadow-lg;
+    @apply backdrop-blur-xl border border-black/5 dark:border-white/10 shadow-lg;
+    background-color: rgba(var(--card), 0.8);
   }
 
   /* Gradient button */

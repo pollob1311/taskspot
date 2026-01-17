@@ -111,7 +111,7 @@ export default function OffersPage() {
                             <select
                                 value={filter.category}
                                 onChange={(e) => setFilter({ ...filter, category: e.target.value })}
-                                className="w-full px-4 py-2 bg-[var(--card)] border border-[var(--muted)]/20 rounded-lg"
+                                className="w-full px-4 py-2 bg-[var(--card)] text-[var(--text)] border border-black/5 dark:border-white/10 rounded-lg"
                             >
                                 <option value="">All Categories</option>
                                 <option value="app">App Install</option>
@@ -127,7 +127,7 @@ export default function OffersPage() {
                             <select
                                 value={filter.country}
                                 onChange={(e) => setFilter({ ...filter, country: e.target.value })}
-                                className="w-full px-4 py-2 bg-[var(--card)] border border-[var(--muted)]/20 rounded-lg"
+                                className="w-full px-4 py-2 bg-[var(--card)] text-[var(--text)] border border-black/5 dark:border-white/10 rounded-lg"
                             >
                                 <option value="">All Countries</option>
                                 {COUNTRIES.map((c) => (
@@ -162,7 +162,7 @@ export default function OffersPage() {
                             const isAllDevices = deviceTypes.length >= 3;
 
                             return (
-                                <div key={offer.id} className={`glass-card p-2 rounded-2xl border border-white/50 shadow-sm relative overflow-hidden group flex flex-col h-full min-h-[200px] ${offer.isCompleted ? 'opacity-60 grayscale-[0.5]' : 'card-hover'}`}>
+                                <div key={offer.id} className={`glass-card p-2 rounded-2xl shadow-sm relative overflow-hidden group flex flex-col h-full min-h-[200px] ${offer.isCompleted ? 'opacity-60 grayscale-[0.5]' : 'card-hover'}`}>
                                     {/* Image Area (Enlarged) */}
                                     <div className="relative w-full h-32 -mt-2 -mx-2 mb-2 overflow-hidden rounded-t-2xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5">
                                         {offer.thumbnailUrl ? (
@@ -211,8 +211,8 @@ export default function OffersPage() {
 
                                     {/* Extremely Compact Text Area */}
                                     <div className="flex flex-col justify-start px-1 leading-tight">
-                                        <h4 className="font-black text-[13px] line-clamp-1 group-hover:text-indigo-600 transition-colors uppercase tracking-tight mb-0.5">{offer.title}</h4>
-                                        <p className="text-[10px] text-slate-500 line-clamp-1 leading-none opacity-90 group-hover:opacity-100 transition-opacity">
+                                        <h4 className="font-black text-[13px] line-clamp-1 text-[var(--text)] group-hover:text-indigo-600 transition-colors uppercase tracking-tight mb-0.5">{offer.title}</h4>
+                                        <p className="text-[10px] text-[var(--text)]/60 line-clamp-1 leading-none opacity-90 group-hover:opacity-100 transition-opacity">
                                             <span className="font-bold text-indigo-500/80 mr-1 uppercase">[{offer.category || 'TASK'}]</span>
                                             {offer.description || 'Complete this task to earn reward'}
                                         </p>
