@@ -92,20 +92,7 @@ export default function RootLayout({
                 />
             </head>
             <body className={`${inter.variable} ${poppins.variable} antialiased`}>
-                {/* Crisp Support Chat Script */}
-                <Script id="crisp-chat" strategy="afterInteractive">
-                    {`
-            window.$crisp=[];
-            window.CRISP_WEBSITE_ID="d9b40391-5192-42a0-abef-1b677d59b0f4";
-            (function(){
-              d=document;
-              s=d.createElement("script");
-              s.src="https://client.crisp.chat/l.js";
-              s.async=1;
-              d.getElementsByTagName("head")[0].appendChild(s);
-            })();
-          `}
-                </Script>
+
 
                 <Providers>{children}</Providers>
             </body>

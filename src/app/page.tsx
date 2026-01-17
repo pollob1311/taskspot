@@ -5,22 +5,27 @@ import { Zap, Diamond } from 'lucide-react';
 import { BackgroundParticles } from '@/components/BackgroundParticles';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
-    return (
-        <div className="min-h-screen relative overflow-x-hidden bg-slate-50/50">
-            <BackgroundParticles />
+    const router = useRouter(); const handleSignIn = (e: React.FormEvent) => {
+        e.preventDefault();
+        router.push('/login');
+    };
 
+    return (
+        <div className="min-h-screen relative overflow-x-hidden">
+            <BackgroundParticles />
             <main className="relative z-10">
-                {/* 1. Hero Section */}
-                <section className="min-h-[70vh] flex items-center justify-center py-4 md:py-8">
+                {/* 1. Hero Section - Nuclear Interaction Fix Applied */}
+                <section className="min-h-[70vh] flex items-center justify-center py-4 md:py-8 relative z-50 pointer-events-none">
                     <div className="container mx-auto px-4 md:px-8">
                         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16">
                             {/* Left: Sign-In Box */}
-                            <div className="w-full max-w-[400px] lg:min-w-[360px] xl:min-w-[400px] order-2 lg:order-1 flex-shrink-0">
-                                <div className="glass-card p-8 rounded-[40px] shadow-2xl border border-slate-100 backdrop-blur-xl bg-white/90">
+                            <div className="w-full max-w-[400px] lg:min-w-[360px] xl:min-w-[400px] order-2 lg:order-1 flex-shrink-0 relative z-[60] pointer-events-auto">
+                                <div className="p-8 rounded-[40px] shadow-2xl border border-slate-100 bg-white">
                                     <h3 className="text-xl font-black text-slate-900 mb-6 text-center lg:text-left">Welcome Back!</h3>
-                                    <form className="space-y-4">
+                                    <form onSubmit={handleSignIn} className="space-y-4">
                                         <div className="space-y-4 text-left">
                                             <div className="space-y-1">
                                                 <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Email Address</label>
@@ -31,9 +36,9 @@ export default function HomePage() {
                                                 <input type="password" placeholder="••••••••" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" />
                                             </div>
                                         </div>
-                                        <button type="submit" className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95">
+                                        <Link href="/login" className="block w-full text-center bg-indigo-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95">
                                             Sign In
-                                        </button>
+                                        </Link>
                                         <div className="text-center pt-2">
                                             <Link href="/register" className="text-sm font-bold text-indigo-600 hover:underline">Create Account →</Link>
                                         </div>
@@ -59,7 +64,7 @@ export default function HomePage() {
                                     Get paid in <span className="text-cyan-500 font-black">Crypto</span>, <span className="text-purple-500 font-black">Cards</span>, or <span className="text-indigo-600 font-black">Cash</span>.
                                 </p>
 
-                                <div className="flex flex-wrap gap-4 justify-center lg:justify-end mb-10">
+                                <div className="flex flex-wrap gap-4 justify-center lg:justify-end mb-10 relative z-[60] pointer-events-auto">
                                     <Link href="/register" className="bg-indigo-600 text-white px-10 py-4 md:px-12 md:py-5 text-lg md:text-xl font-black rounded-2xl shadow-xl hover:scale-105 transition-all">Start Earning</Link>
                                     <Link href="/blog" className="glass-card bg-white px-8 py-4 md:px-10 md:py-5 text-lg rounded-2xl border border-slate-200 font-bold text-slate-700 hover:bg-slate-50">Read Blog</Link>
                                 </div>
@@ -185,7 +190,7 @@ export default function HomePage() {
                         </div>
                     </div>
 
-                    <div className="absolute inset-0 bg-green-100/80 z-0 border-y border-green-200/50"></div>
+
                     <div className="container mx-auto px-4 relative z-20">
                         <h2 className="text-3xl font-black text-slate-900 mb-6 uppercase tracking-tight">Multiple Withdrawal Options</h2>
                         <div className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-5xl mx-auto">
@@ -246,7 +251,7 @@ export default function HomePage() {
             </main>
 
             {/* 4. Footer */}
-            <footer className="relative z-10 border-t border-slate-100 py-4 md:py-6">
+            <footer className="relative z-[60] border-t border-slate-100 py-4 md:py-6 pointer-events-auto">
                 <div className="absolute inset-0 bg-white/60 backdrop-blur-md -z-10"></div>
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">

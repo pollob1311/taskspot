@@ -52,7 +52,8 @@ export const ShatterText = () => {
     let charCounter = 0;
 
     return (
-        <div className="relative inline-block cursor-default group pb-10">
+        <div className="relative inline-block cursor-default group pb-10 pointer-events-none">
+            {/* Background Moving Dot (nodir dheu) */}
             {/* Background Moving Dot (nodir dheu) */}
             <motion.div
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-96 md:h-96 rounded-full bg-gradient-to-r from-purple-500/20 via-blue-500/20 to-cyan-500/20 blur-3xl -z-10"
