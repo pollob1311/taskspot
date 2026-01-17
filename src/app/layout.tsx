@@ -70,7 +70,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className="dark">
+        <html lang="en">
             <head>
                 {/* Structured Data for Google and AI (Schema Markup) */}
                 <script
