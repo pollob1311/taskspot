@@ -34,7 +34,6 @@ export async function GET(request: Request) {
                 { isFeatured: 'desc' },
                 { rewardPoints: 'desc' },
             ],
-            take: 50,
         });
 
         // Mark completed offers

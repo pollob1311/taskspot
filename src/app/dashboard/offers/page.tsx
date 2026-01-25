@@ -93,7 +93,7 @@ export default function OffersPage() {
         <div className="min-h-screen bg-[var(--background)]">
             {/* Header */}
             <header className="bg-[var(--card)] border-b border-[var(--muted)]/20">
-                <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+                <div className="container mx-auto px-4 py-1 flex items-center justify-between">
                     <Link href="/dashboard" className="text-2xl font-bold text-gradient">
                         ← Dashboard
                     </Link>
@@ -102,12 +102,12 @@ export default function OffersPage() {
                 </div>
             </header>
 
-            <main className="container mx-auto px-4 py-8">
+            <main className="container mx-auto px-2 py-1">
                 {/* Filters */}
-                <div className="glass-card p-6 rounded-2xl mb-8">
-                    <div className="grid md:grid-cols-3 gap-4">
+                <div className="glass-card p-2 rounded-2xl mb-2">
+                    <div className="grid md:grid-cols-3 gap-2">
                         <div>
-                            <label className="block text-sm font-medium mb-2">Category</label>
+                            <label className="block text-sm font-medium mb-0">Category</label>
                             <select
                                 value={filter.category}
                                 onChange={(e) => setFilter({ ...filter, category: e.target.value })}
@@ -123,7 +123,7 @@ export default function OffersPage() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium mb-2">Country</label>
+                            <label className="block text-sm font-medium mb-0">Country</label>
                             <select
                                 value={filter.country}
                                 onChange={(e) => setFilter({ ...filter, country: e.target.value })}
@@ -156,7 +156,7 @@ export default function OffersPage() {
                         <p className="text-sm text-[var(--muted)] mt-2">Try changing your filters</p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
                         {offers.map((offer) => {
                             const deviceTypes = offer.deviceTypes || ['desktop', 'mobile', 'tablet'];
                             const isAllDevices = deviceTypes.length >= 3;
@@ -211,7 +211,7 @@ export default function OffersPage() {
 
                                     {/* Extremely Compact Text Area */}
                                     <div className="flex flex-col justify-start px-1 leading-tight">
-                                        <h4 className="font-black text-[13px] line-clamp-1 text-[var(--text)] group-hover:text-indigo-600 transition-colors uppercase tracking-tight mb-0.5">{offer.title}</h4>
+                                        <h4 className="font-black text-[13px] line-clamp-1 text-[var(--text)] group-hover:text-indigo-600 transition-colors uppercase tracking-tight mb-0">{offer.title}</h4>
                                         <p className="text-[10px] text-[var(--text)]/60 line-clamp-1 leading-none opacity-90 group-hover:opacity-100 transition-opacity">
                                             <span className="font-bold text-indigo-500/80 mr-1 uppercase">[{offer.category || 'TASK'}]</span>
                                             {offer.description || 'Complete this task to earn reward'}
