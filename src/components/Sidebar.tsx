@@ -87,11 +87,6 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
                             </div>
                         )}
 
-                        {item.label === 'Surveys' && (
-                            <span className={`bg-indigo-500 text-white text-[10px] px-2 py-0.5 rounded-full font-black ${isCollapsed ? 'absolute top-1 right-1 md:hidden' : 'absolute md:relative right-1 md:right-0 md:ml-auto'}`}>
-                                2
-                            </span>
-                        )}
                     </Link>
                 ))}
             </nav>
