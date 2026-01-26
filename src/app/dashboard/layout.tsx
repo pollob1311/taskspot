@@ -16,7 +16,7 @@ export default function DashboardLayout({
             <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
 
             {/* Main Content Area */}
-            <main className={`min-h-screen ${isCollapsed ? 'ml-8' : 'ml-[140px] md:ml-48 xl:ml-64'}`}>
+            <main className={`min-h-screen transition-all duration-300 ${isCollapsed ? 'ml-7' : 'ml-[70px] md:ml-48 xl:ml-64'}`}>
                 <div className="mx-auto min-h-screen">
                     {children}
                 </div>

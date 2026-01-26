@@ -79,7 +79,7 @@
 @layer utilities {
 
   /* Hide scrollbar but keep functionality */
-  .scrollbar-hide {
+  .scrollbar-hide, .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }

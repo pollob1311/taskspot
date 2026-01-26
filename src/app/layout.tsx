@@ -93,6 +93,21 @@ export default function RootLayout({
             </head>
             <body className={`${inter.variable} ${poppins.variable} antialiased`}>
 
+                {/* Start of Tawk.to Script */}
+                <Script id="tawk-chat" strategy="afterInteractive">
+                    {`
+                        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+                        (function(){
+                        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+                        s1.async=true;
+                        s1.src='https://embed.tawk.to/6976fe8bf3a10f197aa87914/1jfsd4kns';
+                        s1.charset='UTF-8';
+                        s1.setAttribute('crossorigin','*');
+                        s0.parentNode.insertBefore(s1,s0);
+                        })();
+                    `}
+                </Script>
+                {/* End of Tawk.to Script */}
 
                 <Providers>{children}</Providers>
             </body>

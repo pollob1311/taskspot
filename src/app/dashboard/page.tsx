@@ -117,35 +117,35 @@ export default function DashboardPage() {
                         </Link>
                     </div>
 
-                    <div className="flex-grow flex flex-col items-center justify-center relative px-2 md:px-8">
-                        <div className="flex items-center divide-x divide-slate-100 bg-slate-50/50 rounded-lg md:rounded-xl border border-slate-100/50 w-full md:w-auto justify-between md:justify-center">
-                            <Link href="/dashboard/history" className="px-1 md:px-4 py-1.5 flex flex-col justify-center flex-1 min-w-0 md:min-w-[120px] hover:bg-white transition-all duration-300">
-                                <span className="text-[9px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-widest text-indigo-600 mb-0.5 whitespace-nowrap text-center">Earned</span>
-                                <span className="text-[10px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-indigo-900 text-center">${stats.totalEarned.toFixed(2)}</span>
+                    <div className="flex-grow flex flex-col items-center justify-center relative px-1 md:px-8 overflow-hidden">
+                        <div className="flex items-center divide-x divide-slate-100 bg-slate-50/50 rounded-lg md:rounded-xl border border-slate-100/50 w-full md:w-auto justify-between md:justify-center overflow-x-auto no-scrollbar">
+                            <Link href="/dashboard/history" className="px-1 md:px-4 py-1 flex flex-col justify-center flex-1 min-w-[50px] md:min-w-[120px] hover:bg-white transition-all duration-300">
+                                <span className="text-[7px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-tight text-indigo-600 mb-0 whitespace-nowrap text-center">Earn</span>
+                                <span className="text-[9px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-indigo-900 text-center">${stats.totalEarned.toFixed(1)}</span>
                             </Link>
-                            <Link href="/dashboard/withdraw" className="px-1 md:px-4 py-1.5 flex flex-col justify-center flex-1 min-w-0 md:min-w-[100px] hover:bg-white transition-all duration-300">
-                                <span className="text-[8px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-wider text-emerald-700 mb-0.5 whitespace-nowrap text-center">Available</span>
-                                <span className="text-[10px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-emerald-600 text-center">${stats.availableBalance.toFixed(2)}</span>
+                            <Link href="/dashboard/withdraw" className="px-1 md:px-4 py-1 flex flex-col justify-center flex-1 min-w-[50px] md:min-w-[100px] hover:bg-white transition-all duration-300">
+                                <span className="text-[7px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-tight text-emerald-700 mb-0 whitespace-nowrap text-center">Avail</span>
+                                <span className="text-[9px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-emerald-600 text-center">${stats.availableBalance.toFixed(1)}</span>
                             </Link>
-                            <Link href="/dashboard/history" className="px-1 md:px-4 py-1.5 flex flex-col justify-center flex-1 min-w-0 md:min-w-[100px] hover:bg-white transition-all duration-300">
-                                <span className="text-[8px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-wider text-amber-700 mb-0.5 whitespace-nowrap text-center">Pending</span>
-                                <span className="text-[10px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-amber-500 text-center">${stats.pendingBalance.toFixed(2)}</span>
+                            <Link href="/dashboard/history" className="px-1 md:px-4 py-1 flex flex-col justify-center flex-1 min-w-[50px] md:min-w-[100px] hover:bg-white transition-all duration-300">
+                                <span className="text-[7px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-tight text-amber-700 mb-0 whitespace-nowrap text-center">Pend</span>
+                                <span className="text-[9px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-amber-500 text-center">${stats.pendingBalance.toFixed(1)}</span>
                             </Link>
-                            <Link href="/dashboard/history" className="px-1 md:px-4 py-1.5 flex flex-col justify-center flex-1 min-w-0 md:min-w-[110px] hover:bg-white transition-all duration-300">
-                                <span className="text-[9px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-widest text-blue-700 mb-0.5 whitespace-nowrap text-center">Done</span>
-                                <span className="text-[10px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-blue-600 text-center">{stats.completedOffers}</span>
+                            <Link href="/dashboard/history" className="px-1 md:px-4 py-1 flex flex-col justify-center flex-1 min-w-[40px] md:min-w-[110px] hover:bg-white transition-all duration-300">
+                                <span className="text-[7px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-tight text-blue-700 mb-0 whitespace-nowrap text-center">Done</span>
+                                <span className="text-[9px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-blue-600 text-center">{stats.completedOffers}</span>
                             </Link>
                         </div>
                         <div className="absolute -bottom-1 left-0 w-full h-[0.5px] bg-teal-400 rounded-full"></div>
                     </div>
 
-                    <div className="flex items-center gap-1.5 md:gap-3 flex-shrink-0">
-                        <div className="flex items-center bg-indigo-50/50 rounded-lg md:rounded-xl px-1 md:px-3 py-1 md:py-1.5 border border-indigo-100/50 flex-shrink-0">
-                            <div className="mr-1 md:mr-3">
-                                <span className="text-[8px] md:text-[clamp(0.4rem,0.8vw,0.7rem)] uppercase text-indigo-700 font-black block mb-0.5">Balance</span>
-                                <div className="font-mono font-black text-indigo-600 text-[11px] md:text-[clamp(0.65rem,1.4vw,1rem)]">${stats.availableBalance.toFixed(2)}</div>
+                    <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
+                        <div className="flex items-center bg-indigo-50/50 rounded-lg md:rounded-xl px-1 md:px-3 py-0.5 md:py-1.5 border border-indigo-100/50 flex-shrink-0">
+                            <div className="mr-1 md:mr-3 hidden xs:block">
+                                <span className="text-[7px] md:text-[clamp(0.4rem,0.8vw,0.7rem)] uppercase text-indigo-700 font-black block mb-0">Balance</span>
+                                <div className="font-mono font-black text-indigo-600 text-[9px] md:text-[clamp(0.65rem,1.4vw,1rem)]">${stats.availableBalance.toFixed(1)}</div>
                             </div>
-                            <Link href="/dashboard/withdraw" className="bg-indigo-600 text-white px-1.5 md:px-5 py-1 md:py-2.5 rounded-lg text-[10px] md:text-[clamp(0.55rem,1vw,0.75rem)] font-black hover:bg-indigo-700 shadow-md">Withdraw</Link>
+                            <Link href="/dashboard/withdraw" className="bg-indigo-600 text-white px-2 md:px-5 py-1.5 md:py-2.5 rounded-lg text-[9px] md:text-[clamp(0.55rem,1vw,0.75rem)] font-black hover:bg-indigo-700 shadow-md">Withdraw</Link>
                         </div>
 
                         <div className="relative">
