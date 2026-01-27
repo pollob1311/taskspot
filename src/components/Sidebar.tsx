@@ -18,7 +18,9 @@ import {
     Sun,
     Moon,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    MousePointerClick, // নতুন আইকন
+    Gamepad2 // নতুন আইকন
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -31,10 +33,30 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
     const pathname = usePathname();
     const { theme, toggleTheme } = useTheme();
 
+    // টাইমওয়ালের বেস ইউআরএল
+    const timeWallBase = "https://timewall.io/users/login?oid=fe9888054267aa75";
+    const userId = session?.user?.id || 'guest';
+
     const menuItems = [
         { label: 'Earn', icon: Home, href: '/dashboard', active: pathname === '/dashboard' },
         { label: 'Offers', icon: Layout, href: '/dashboard/offers', active: pathname.startsWith('/dashboard/offers') },
         { label: 'Surveys', icon: Zap, href: '/dashboard/surveys', active: pathname.startsWith('/dashboard/surveys') },
+
+        // --- এই দুটি নতুন যোগ করা হয়েছে (External Links) ---
+        {
+            label: 'PTC Clicks',
+            icon: MousePointerClick,
+            href: `${timeWallBase}&uid=${userId}&tab=clicks`,
+            isExternal: true
+        },
+        {
+            label: 'Play Games',
+            icon: Gamepad2,
+            href: `${timeWallBase}&uid=${userId}&tab=games`,
+            isExternal: true
+        },
+        // ------------------------------------------------
+
         { label: 'Shop', icon: ShoppingBag, href: '/dashboard/shop', active: pathname.startsWith('/dashboard/shop') },
         { label: 'Leaderboard', icon: Trophy, href: '/dashboard/leaderboard', active: pathname.startsWith('/dashboard/leaderboard') },
         { label: 'Referrals', icon: Users, href: '/dashboard/referrals', active: pathname.startsWith('/dashboard/referrals') },
@@ -68,27 +90,50 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
             </div>
 
             <nav className="flex-grow px-4 pb-4 space-y-1 overflow-y-auto custom-scrollbar">
-                {menuItems.map((item) => (
-                    <Link
-                        key={item.label}
-                        href={item.href}
-                        className={`flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 px-1 md:px-4 py-2 md:py-2.5 rounded-xl text-sm font-bold group relative ${item.active
-                            ? 'bg-indigo-600 text-white shadow-md'
-                            : 'text-[var(--text)]/60 hover:text-[var(--text)] hover:bg-black/5 dark:hover:bg-white/5'
-                            }`}
-                    >
-                        <item.icon className={`shrink-0 ${isCollapsed ? 'w-4 h-4' : 'w-4 h-4 md:w-5 md:h-5'} ${item.active ? 'text-white' : 'text-slate-500'}`} />
-                        <span className={`truncate ${isCollapsed ? 'hidden' : 'block'} text-[8px] md:text-sm`}>{item.label}</span>
+                {menuItems.map((item) => {
+                    const commonClasses = `flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-3 px-1 md:px-4 py-2 md:py-2.5 rounded-xl text-sm font-bold group relative ${item.active
+                        ? 'bg-indigo-600 text-white shadow-md'
+                        : 'text-[var(--text)]/60 hover:text-[var(--text)] hover:bg-black/5 dark:hover:bg-white/5'
+                        }`;
 
-                        {/* Tooltip on hover when collapsed */}
-                        {isCollapsed && (
-                            <div className="absolute left-full ml-2 px-2 py-1 bg-indigo-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-xl">
-                                {item.label}
-                            </div>
-                        )}
+                    // যদি এক্সটারনাল লিঙ্ক হয় তবে <a> ট্যাগ ব্যবহার হবে
+                    if (item.isExternal) {
+                        return (
+                            <a
+                                key={item.label}
+                                href={item.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={commonClasses}
+                            >
+                                <item.icon className={`shrink-0 ${isCollapsed ? 'w-4 h-4' : 'w-4 h-4 md:w-5 md:h-5'} text-slate-500 group-hover:text-indigo-500`} />
+                                <span className={`truncate ${isCollapsed ? 'hidden' : 'block'} text-[8px] md:text-sm`}>{item.label}</span>
+                                {isCollapsed && (
+                                    <div className="absolute left-full ml-2 px-2 py-1 bg-indigo-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-xl">
+                                        {item.label}
+                                    </div>
+                                )}
+                            </a>
+                        );
+                    }
 
-                    </Link>
-                ))}
+                    // নরমাল পেজের জন্য <Link>
+                    return (
+                        <Link
+                            key={item.label}
+                            href={item.href}
+                            className={commonClasses}
+                        >
+                            <item.icon className={`shrink-0 ${isCollapsed ? 'w-4 h-4' : 'w-4 h-4 md:w-5 md:h-5'} ${item.active ? 'text-white' : 'text-slate-500'}`} />
+                            <span className={`truncate ${isCollapsed ? 'hidden' : 'block'} text-[8px] md:text-sm`}>{item.label}</span>
+                            {isCollapsed && (
+                                <div className="absolute left-full ml-2 px-2 py-1 bg-indigo-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-[100] shadow-xl">
+                                    {item.label}
+                                </div>
+                            )}
+                        </Link>
+                    );
+                })}
             </nav>
 
             <div className="p-4 border-t border-slate-800 space-y-4">
