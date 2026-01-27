@@ -111,14 +111,14 @@ export default function OffersPage() {
                             <select
                                 value={filter.category}
                                 onChange={(e) => setFilter({ ...filter, category: e.target.value })}
-                                className="w-full px-4 py-2 bg-[var(--card)] text-[var(--text)] border border-black/5 dark:border-white/10 rounded-lg"
+                                className="w-full px-4 py-2 bg-white dark:bg-[#013529] text-[var(--text)] border border-black/5 dark:border-white/10 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/50"
                             >
-                                <option value="">All Categories</option>
-                                <option value="app">App Install</option>
-                                <option value="survey">Survey</option>
-                                <option value="email">Email Submit</option>
-                                <option value="signup">Sign Up</option>
-                                <option value="trial">Free Trial</option>
+                                <option value="" className="bg-white dark:bg-[#013529]">All Categories</option>
+                                <option value="app" className="bg-white dark:bg-[#013529]">App Install</option>
+                                <option value="survey" className="bg-white dark:bg-[#013529]">Survey</option>
+                                <option value="email" className="bg-white dark:bg-[#013529]">Email Submit</option>
+                                <option value="signup" className="bg-white dark:bg-[#013529]">Sign Up</option>
+                                <option value="trial" className="bg-white dark:bg-[#013529]">Free Trial</option>
                             </select>
                         </div>
 
@@ -127,11 +127,11 @@ export default function OffersPage() {
                             <select
                                 value={filter.country}
                                 onChange={(e) => setFilter({ ...filter, country: e.target.value })}
-                                className="w-full px-4 py-2 bg-[var(--card)] text-[var(--text)] border border-black/5 dark:border-white/10 rounded-lg"
+                                className="w-full px-4 py-2 bg-white dark:bg-[#013529] text-[var(--text)] border border-black/5 dark:border-white/10 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/50"
                             >
-                                <option value="">All Countries</option>
+                                <option value="" className="bg-white dark:bg-[#013529]">All Countries</option>
                                 {COUNTRIES.map((c) => (
-                                    <option key={c.code} value={c.code}>
+                                    <option key={c.code} value={c.code} className="bg-white dark:bg-[#013529]">
                                         {c.name}
                                     </option>
                                 ))}

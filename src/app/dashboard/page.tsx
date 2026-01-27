@@ -101,17 +101,16 @@ export default function DashboardPage() {
 
     return (
         <div className="min-h-screen bg-[var(--background)]">
-            <header className="bg-white border-b border-slate-100 shadow-sm sticky top-0 z-40 h-16">
+            <header className="bg-white dark:bg-[#BFC6C4] border-b border-slate-100 dark:border-black/5 shadow-sm sticky top-0 z-40 h-12">
                 <div className="container mx-auto px-1 md:px-4 h-full flex items-center justify-between gap-1 md:gap-4 relative">
                     <div className="flex items-center flex-shrink-0 relative">
                         <Link href="/dashboard/offers" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                            <div className="w-12 md:w-24 h-1"></div>
                             <Image
-                                src="/taskspot-logo.png"
+                                src="/my-new-logo.png"
                                 alt="TaskSpot"
-                                width={400}
-                                height={160}
-                                className="absolute -top-[45px] left-0 h-28 md:h-40 w-auto object-contain max-w-none drop-shadow-md z-50"
+                                width={40}
+                                height={40}
+                                className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-sm"
                                 priority
                             />
                         </Link>
@@ -119,15 +118,15 @@ export default function DashboardPage() {
 
                     <div className="flex-grow flex flex-col items-center justify-center relative px-1 md:px-8 overflow-hidden">
                         <div className="flex items-center divide-x divide-slate-100 bg-slate-50/50 rounded-lg md:rounded-xl border border-slate-100/50 w-full md:w-auto justify-between md:justify-center overflow-x-auto no-scrollbar">
-                            <Link href="/dashboard/history" className="px-1 md:px-4 py-1 flex flex-col justify-center flex-1 min-w-[50px] md:min-w-[120px] hover:bg-white transition-all duration-300">
+                            <Link href="/dashboard/history" className="px-1 md:px-4 py-0.5 flex flex-col justify-center flex-1 min-w-[50px] md:min-w-[120px] hover:bg-white transition-all duration-300">
                                 <span className="text-[7px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-tight text-indigo-600 mb-0 whitespace-nowrap text-center">Earn</span>
                                 <span className="text-[9px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-indigo-900 text-center">${stats.totalEarned.toFixed(1)}</span>
                             </Link>
-                            <Link href="/dashboard/withdraw" className="px-1 md:px-4 py-1 flex flex-col justify-center flex-1 min-w-[50px] md:min-w-[100px] hover:bg-white transition-all duration-300">
+                            <Link href="/dashboard/withdraw" className="px-1 md:px-4 py-0.5 flex flex-col justify-center flex-1 min-w-[50px] md:min-w-[100px] hover:bg-white transition-all duration-300">
                                 <span className="text-[7px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-tight text-emerald-700 mb-0 whitespace-nowrap text-center">Avail</span>
                                 <span className="text-[9px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-emerald-600 text-center">${stats.availableBalance.toFixed(1)}</span>
                             </Link>
-                            <Link href="/dashboard/history" className="px-1 md:px-4 py-1 flex flex-col justify-center flex-1 min-w-[50px] md:min-w-[100px] hover:bg-white transition-all duration-300">
+                            <Link href="/dashboard/history" className="px-1 md:px-4 py-0.5 flex flex-col justify-center flex-1 min-w-[50px] md:min-w-[100px] hover:bg-white transition-all duration-300">
                                 <span className="text-[7px] md:text-[clamp(0.4rem,0.9vw,0.7rem)] font-black uppercase tracking-tight text-amber-700 mb-0 whitespace-nowrap text-center">Pend</span>
                                 <span className="text-[9px] md:text-[clamp(0.65rem,1.5vw,0.875rem)] font-black text-amber-500 text-center">${stats.pendingBalance.toFixed(1)}</span>
                             </Link>
@@ -140,17 +139,17 @@ export default function DashboardPage() {
                     </div>
 
                     <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
-                        <div className="flex items-center bg-indigo-50/50 rounded-lg md:rounded-xl px-1 md:px-3 py-0.5 md:py-1.5 border border-indigo-100/50 flex-shrink-0">
+                        <div className="flex items-center bg-indigo-50/50 rounded-lg md:rounded-xl px-1 md:px-3 py-0.5 border border-indigo-100/50 flex-shrink-0">
                             <div className="mr-1 md:mr-3 hidden xs:block">
                                 <span className="text-[7px] md:text-[clamp(0.4rem,0.8vw,0.7rem)] uppercase text-indigo-700 font-black block mb-0">Balance</span>
                                 <div className="font-mono font-black text-indigo-600 text-[9px] md:text-[clamp(0.65rem,1.4vw,1rem)]">${stats.availableBalance.toFixed(1)}</div>
                             </div>
-                            <Link href="/dashboard/withdraw" className="bg-indigo-600 text-white px-2 md:px-5 py-1.5 md:py-2.5 rounded-lg text-[9px] md:text-[clamp(0.55rem,1vw,0.75rem)] font-black hover:bg-indigo-700 shadow-md">Withdraw</Link>
+                            <Link href="/dashboard/withdraw" className="bg-indigo-600 text-white px-2 md:px-5 py-1 md:py-1.5 rounded-lg text-[9px] md:text-[clamp(0.55rem,1vw,0.75rem)] font-black hover:bg-indigo-700 shadow-md">Withdraw</Link>
                         </div>
 
                         <div className="relative">
-                            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 hover:bg-slate-100 rounded-xl transition-colors flex flex-col gap-0.5 w-9 h-9 items-center justify-center border border-slate-100">
-                                <Menu className="w-5 h-5 text-indigo-600" />
+                            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-1.5 hover:bg-slate-100 rounded-xl transition-colors flex flex-col gap-0.5 w-8 h-8 md:w-9 md:h-9 items-center justify-center border border-slate-100">
+                                <Menu className="w-6 h-6 text-indigo-600" />
                             </button>
 
                             {isMenuOpen && (
@@ -204,14 +203,14 @@ export default function DashboardPage() {
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-2">
                             <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
-                            <h3 className="text-2xl font-bold uppercase tracking-tight">Featured Offers</h3>
+                            <h3 className="text-lg sm:text-2xl font-bold uppercase tracking-tight">Featured Offers</h3>
                         </div>
-                        <div className="hidden sm:flex items-center gap-2">
-                            <Link href="/dashboard/wall" className="flex items-center gap-2 bg-indigo-600 text-white px-3 py-2 rounded-xl text-[10px] font-black shadow-lg shadow-indigo-100 hover:scale-105 transition-all">
-                                <Diamond className="w-3 h-3" /> ACCESS ELITE WALL
+                        <div className="flex items-center gap-1 sm:gap-2">
+                            <Link href="/dashboard/wall" className="flex items-center gap-1 sm:gap-2 bg-indigo-600 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[8px] sm:text-[10px] font-black shadow-lg shadow-indigo-100 hover:scale-105 transition-all">
+                                <Diamond className="w-3 h-3" /> <span className="hidden xs:inline">ACCESS </span>ELITE WALL
                             </Link>
-                            <a href={timeWallTaskUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-2 rounded-xl text-[10px] font-black shadow-lg shadow-emerald-100 hover:scale-105 transition-all">
-                                <Zap className="w-3 h-3" /> OFFER WALL
+                            <a href={timeWallTaskUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 sm:gap-2 bg-emerald-600 text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[8px] sm:text-[10px] font-black shadow-lg shadow-emerald-100 hover:scale-105 transition-all">
+                                <Zap className="w-3 h-3" /> <span className="hidden xs:inline">OFFER </span>WALL
                             </a>
                         </div>
                     </div>
@@ -257,7 +256,7 @@ export default function DashboardPage() {
                             <Zap className="w-5 h-5 text-indigo-500 fill-indigo-500" />
                             <h3 className="text-2xl font-bold uppercase tracking-tight">Offer Partners</h3>
                         </div>
-                        <Link href="/dashboard/offers" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
+                        <Link href="/dashboard/offers" className="text-sm font-bold text-indigo-600 dark:text-emerald-400 hover:text-indigo-500 dark:hover:text-emerald-300 flex items-center gap-1">
                             See All <ChevronRight className="w-4 h-4" />
                         </Link>
                     </div>
@@ -295,7 +294,7 @@ export default function DashboardPage() {
                             <ShieldCheck className="w-5 h-5 text-emerald-500" />
                             <h3 className="text-2xl font-bold uppercase tracking-tight">Survey Partners</h3>
                         </div>
-                        <Link href="/dashboard/offers" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
+                        <Link href="/dashboard/offers" className="text-sm font-bold text-indigo-600 dark:text-emerald-400 hover:text-indigo-500 dark:hover:text-emerald-300 flex items-center gap-1">
                             See All <ChevronRight className="w-4 h-4" />
                         </Link>
                     </div>
