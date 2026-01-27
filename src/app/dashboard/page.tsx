@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronRight, Star, Zap, Layout, ShieldCheck, Diamond } from 'lucide-react';
+import { ChevronRight, Star, Zap, Layout, ShieldCheck, Diamond, Menu } from 'lucide-react';
 
 interface Offer {
     id: string;
@@ -26,21 +26,16 @@ interface Partner {
     gradient: string;
     tag?: string;
     rating: number;
+    href?: string;
 }
 
 const offerPartners: Partner[] = [
-    { id: 'notik', name: 'Notik', gradient: 'partner-card-pink', tag: 'Hot', rating: 5 },
-    { id: 'offery', name: 'Offery', gradient: 'partner-card-blue', tag: '+50%', rating: 5 },
-    { id: 'adtwall', name: 'Adtwall', gradient: 'partner-card-purple', tag: '+50%', rating: 5 },
-    { id: 'lootably', name: 'Lootably', gradient: 'partner-card-pink', tag: 'Hot', rating: 5 },
-    { id: 'adscend', name: 'adscendmedia', gradient: 'partner-card-blue', tag: 'New', rating: 5 },
-    { id: 'torox', name: 'Torox', gradient: 'partner-card-blue', tag: 'New', rating: 5 },
+    { id: 'cpagrip', name: 'CPAGrip', gradient: 'partner-card-pink', tag: 'Hot', rating: 5, href: '/dashboard/offers' },
+    { id: 'timewall', name: 'Time Wall', gradient: 'partner-card-purple', tag: 'Hot', rating: 5, href: 'tasks' },
 ];
 
 const surveyPartners: Partner[] = [
-    { id: 'bitlab', name: 'BitLab', gradient: 'partner-card-pink', tag: 'Hot', rating: 5 },
-    { id: 'pollfish', name: 'Pollfish', gradient: 'partner-card-blue', tag: '+15%', rating: 5 },
-    { id: 'cpalead', name: 'CPALead', gradient: 'partner-card-purple', tag: 'New', rating: 5 },
+    { id: 'timewall', name: 'Time Wall', gradient: 'partner-card-blue', tag: 'Hot', rating: 5, href: 'surveys' },
 ];
 
 export default function DashboardPage() {
@@ -86,10 +81,15 @@ export default function DashboardPage() {
 
             fetch('/api/offers')
                 .then(res => res.json())
-                .then(data => setOffers(data.slice(0, 10)))
+                .then(data => setOffers(data.slice(0, 6)))
                 .catch(console.error);
         }
     }, [session]);
+
+    const timeWallBase = "https://timewall.io/users/login?oid=fe9888054267aa75";
+    const userId = session?.user?.id || 'guest';
+    const timeWallTaskUrl = `${timeWallBase}&uid=${userId}&tab=tasks`;
+    const timeWallSurveyUrl = `${timeWallBase}&uid=${userId}&tab=surveys`;
 
     if (status === 'loading') {
         return (
@@ -150,9 +150,7 @@ export default function DashboardPage() {
 
                         <div className="relative">
                             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 hover:bg-slate-100 rounded-xl transition-colors flex flex-col gap-0.5 w-9 h-9 items-center justify-center border border-slate-100">
-                                <div className="w-0.5 h-0.5 bg-indigo-600 rounded-full"></div>
-                                <div className="w-0.5 h-0.5 bg-indigo-600 rounded-full"></div>
-                                <div className="w-0.5 h-0.5 bg-indigo-600 rounded-full"></div>
+                                <Menu className="w-5 h-5 text-indigo-600" />
                             </button>
 
                             {isMenuOpen && (
@@ -208,36 +206,41 @@ export default function DashboardPage() {
                             <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
                             <h3 className="text-2xl font-bold uppercase tracking-tight">Featured Offers</h3>
                         </div>
-                        <Link href="/dashboard/wall" className="hidden sm:flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-indigo-100 hover:scale-105 transition-all">
-                            <Diamond className="w-3 h-3" /> ACCESS ELITE WALL
-                        </Link>
+                        <div className="hidden sm:flex items-center gap-2">
+                            <Link href="/dashboard/wall" className="flex items-center gap-2 bg-indigo-600 text-white px-3 py-2 rounded-xl text-[10px] font-black shadow-lg shadow-indigo-100 hover:scale-105 transition-all">
+                                <Diamond className="w-3 h-3" /> ACCESS ELITE WALL
+                            </Link>
+                            <a href={timeWallTaskUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-emerald-600 text-white px-3 py-2 rounded-xl text-[10px] font-black shadow-lg shadow-emerald-100 hover:scale-105 transition-all">
+                                <Zap className="w-3 h-3" /> OFFER WALL
+                            </a>
+                        </div>
                     </div>
 
                     {offers.length === 0 ? (
                         <div className="glass-card p-12 rounded-3xl text-center"><p>Loading offers...</p></div>
                     ) : (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-6 gap-2 sm:gap-3">
                             {offers.map((offer) => (
-                                <Link key={offer.id} href={`/dashboard/offers?id=${offer.id}`} className="glass-card p-2 rounded-2xl card-hover border border-white/50 shadow-sm relative overflow-hidden group flex flex-col h-full min-h-[190px]">
-                                    <div className="relative w-full h-32 -mt-2 -mx-2 mb-2 overflow-hidden rounded-t-2xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5">
+                                <Link key={offer.id} href={`/dashboard/offers?id=${offer.id}`} className="glass-card p-1.5 sm:p-2 rounded-xl sm:rounded-2xl card-hover border border-white/50 shadow-sm relative overflow-hidden group flex flex-col h-full min-h-[140px] sm:min-h-[170px]">
+                                    <div className="relative w-full h-16 sm:h-24 -mt-1.5 sm:-mt-2 -mx-1.5 sm:-mx-2 mb-1.5 sm:mb-2 overflow-hidden rounded-t-xl sm:rounded-t-2xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5">
                                         {offer.thumbnailUrl ? (
                                             <Image src={offer.thumbnailUrl} alt={offer.title} fill className="object-cover group-hover:scale-110 transition-transform duration-500" unoptimized />
                                         ) : (
-                                            <div className="w-full h-full flex items-center justify-center text-4xl">🔥</div>
+                                            <div className="w-full h-full flex items-center justify-center text-xl sm:text-2xl">🔥</div>
                                         )}
-                                        <div className="absolute top-2 right-2 font-mono font-bold text-emerald-600 bg-white/95 backdrop-blur-sm px-2.5 py-0.5 rounded-full text-[13px] border border-emerald-500/20 shadow-md z-10">
+                                        <div className="absolute top-0.5 sm:top-1 right-0.5 sm:right-1 font-mono font-bold text-emerald-600 bg-white/95 backdrop-blur-sm px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[11px] border border-emerald-500/20 shadow-sm z-10">
                                             +${offer.userReward.toFixed(2)}
                                         </div>
                                     </div>
-                                    <div className="flex flex-col justify-start px-1">
-                                        <h4 className="font-black text-[13px] line-clamp-1 group-hover:text-indigo-600 transition-colors uppercase tracking-tight leading-tight">{offer.title}</h4>
-                                        <p className="text-[10px] text-slate-500 line-clamp-1 leading-none opacity-90 group-hover:opacity-100 transition-opacity">
+                                    <div className="flex flex-col justify-start px-0.5 sm:px-1">
+                                        <h4 className="font-black text-[9px] sm:text-[11px] line-clamp-1 group-hover:text-indigo-600 transition-colors uppercase tracking-tight leading-tight">{offer.title}</h4>
+                                        <p className="text-[8px] sm:text-[9px] text-slate-500 line-clamp-1 leading-none opacity-90 group-hover:opacity-100 transition-opacity">
                                             <span className="font-bold text-indigo-500/80 mr-1 uppercase">[{offer.category || 'TASK'}]</span>
                                             {offer.description}
                                         </p>
                                     </div>
                                     <div className="mt-1">
-                                        <div className="w-full bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 py-1 rounded-lg font-black text-[12px] uppercase tracking-wider block text-center transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                                        <div className="w-full bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 py-0.5 sm:py-1 rounded-md sm:rounded-lg font-black text-[8px] sm:text-[10px] uppercase tracking-wider block text-center transition-all transform hover:scale-[1.02] active:scale-[0.98]">
                                             Start Earning
                                         </div>
                                     </div>
@@ -254,21 +257,34 @@ export default function DashboardPage() {
                             <Zap className="w-5 h-5 text-indigo-500 fill-indigo-500" />
                             <h3 className="text-2xl font-bold uppercase tracking-tight">Offer Partners</h3>
                         </div>
-                        <Link href="/dashboard/wall" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
-                            Go to Wall <ChevronRight className="w-4 h-4" />
+                        <Link href="/dashboard/offers" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
+                            See All <ChevronRight className="w-4 h-4" />
                         </Link>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                        {offerPartners.map((partner) => (
-                            <Link key={partner.id} href="/dashboard/wall" className={`relative group aspect-[4/5] rounded-3xl overflow-hidden cursor-pointer ${partner.gradient} p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg`}>
-                                {partner.tag && <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">{partner.tag}</div>}
-                                <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl font-black text-white">{partner.name[0]}</span></div>
-                                <h3 className="text-sm font-black text-white uppercase tracking-wider mb-2">{partner.name}</h3>
-                                <div className="flex items-center gap-0.5">
-                                    {Array(5).fill(0).map((_, i) => (<Star key={i} className={`w-3 h-3 ${i < partner.rating ? 'text-amber-300 fill-amber-300' : 'text-white/30'}`} />))}
-                                </div>
-                            </Link>
-                        ))}
+                        {offerPartners.map((partner) => {
+                            const isExternal = partner.href === 'tasks' || partner.href === 'surveys';
+                            const linkHref = partner.href === 'tasks'
+                                ? timeWallTaskUrl
+                                : partner.href === 'surveys'
+                                    ? timeWallSurveyUrl
+                                    : partner.href && partner.href.startsWith('/')
+                                        ? partner.href
+                                        : "/dashboard/offers";
+                            const LinkComponent = isExternal ? 'a' : Link;
+                            const linkProps = isExternal ? { href: linkHref, target: "_blank", rel: "noopener noreferrer" } : { href: linkHref };
+
+                            return (
+                                <LinkComponent key={partner.id} {...linkProps as any} className={`relative group aspect-[4/2.5] rounded-2xl overflow-hidden cursor-pointer ${partner.gradient} p-3 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-md`}>
+                                    {partner.tag && <div className="absolute top-2 right-2 bg-white/20 backdrop-blur-md text-white text-[8px] font-black px-1.5 py-0.5 rounded-full uppercase">{partner.tag}</div>}
+                                    <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center mb-1 group-hover:scale-110 transition-transform"><span className="text-xl font-black text-white">{partner.name[0]}</span></div>
+                                    <h3 className="text-[11px] font-black text-white uppercase tracking-wider mb-1">{partner.name}</h3>
+                                    <div className="flex items-center gap-0.5">
+                                        {Array(5).fill(0).map((_, i) => (<Star key={i} className={`w-2 h-2 ${i < partner.rating ? 'text-amber-300 fill-amber-300' : 'text-white/30'}`} />))}
+                                    </div>
+                                </LinkComponent>
+                            );
+                        })}
                     </div>
                 </section>
 
@@ -279,21 +295,34 @@ export default function DashboardPage() {
                             <ShieldCheck className="w-5 h-5 text-emerald-500" />
                             <h3 className="text-2xl font-bold uppercase tracking-tight">Survey Partners</h3>
                         </div>
-                        <Link href="/dashboard/wall" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
-                            Go to Wall <ChevronRight className="w-4 h-4" />
+                        <Link href="/dashboard/offers" className="text-sm font-bold text-indigo-600 hover:text-indigo-500 flex items-center gap-1">
+                            See All <ChevronRight className="w-4 h-4" />
                         </Link>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                        {surveyPartners.map((partner) => (
-                            <Link key={partner.id} href="/dashboard/wall" className={`relative group aspect-[4/5] rounded-3xl overflow-hidden cursor-pointer ${partner.gradient} p-4 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg`}>
-                                {partner.tag && <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">{partner.tag}</div>}
-                                <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl font-black text-white">{partner.name[0]}</span></div>
-                                <h3 className="text-sm font-black text-white uppercase tracking-wider mb-2">{partner.name}</h3>
-                                <div className="flex items-center gap-0.5">
-                                    {Array(5).fill(0).map((_, i) => (<Star key={i} className={`w-3 h-3 ${i < partner.rating ? 'text-amber-300 fill-amber-300' : 'text-white/30'}`} />))}
-                                </div>
-                            </Link>
-                        ))}
+                        {surveyPartners.map((partner) => {
+                            const isExternal = partner.href === 'tasks' || partner.href === 'surveys';
+                            const linkHref = partner.href === 'tasks'
+                                ? timeWallTaskUrl
+                                : partner.href === 'surveys'
+                                    ? timeWallSurveyUrl
+                                    : partner.href && partner.href.startsWith('/')
+                                        ? partner.href
+                                        : "/dashboard/offers";
+                            const LinkComponent = isExternal ? 'a' : Link;
+                            const linkProps = isExternal ? { href: linkHref, target: "_blank", rel: "noopener noreferrer" } : { href: linkHref };
+
+                            return (
+                                <LinkComponent key={partner.id} {...linkProps as any} className={`relative group aspect-[4/2.5] rounded-2xl overflow-hidden cursor-pointer ${partner.gradient} p-3 flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-md`}>
+                                    {partner.tag && <div className="absolute top-2 right-2 bg-white/20 backdrop-blur-md text-white text-[8px] font-black px-1.5 py-0.5 rounded-full uppercase">{partner.tag}</div>}
+                                    <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center mb-1 group-hover:scale-110 transition-transform"><span className="text-xl font-black text-white">{partner.name[0]}</span></div>
+                                    <h3 className="text-[11px] font-black text-white uppercase tracking-wider mb-1">{partner.name}</h3>
+                                    <div className="flex items-center gap-0.5">
+                                        {Array(5).fill(0).map((_, i) => (<Star key={i} className={`w-2 h-2 ${i < partner.rating ? 'text-amber-300 fill-amber-300' : 'text-white/30'}`} />))}
+                                    </div>
+                                </LinkComponent>
+                            );
+                        })}
                     </div>
                 </section>
 
