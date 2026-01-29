@@ -1,19 +1,19 @@
-const fetch = require('node-fetch');
+
 
 async function testPostback() {
     // Replace with your actual user ID from the admin panel
-    const userId = "USER_ID_HERE";
+    const userId = "H74fadb42-1db1-48bf-8093-832f4cf513ca";
     const token = "YOUR_POSTBACK_TOKEN_HERE"; // If set in SystemSettings
 
     const params = new URLSearchParams({
-        uid: userId,
+        user_id: userId,
         payout: "0.50",
-        network: "TestNetwork",
+        network: "TimeWall",
         token: token,
         status: "success"
     });
 
-    const url = `http://localhost:3000/api/postback?${params.toString()}`;
+    const url = `https://taskspot.site/api/postback?${params.toString()}`;
 
     console.log(`Sending mock postback to: ${url}`);
 
