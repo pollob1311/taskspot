@@ -21,7 +21,7 @@ async function testPostback() {
 
         status: "success"
     });
-    const url = `http://localhost:3000/api/postback?${params.toString()}`;
+    const url = `https://taskspot.site/api/postback?${params.toString()}`;
 
     console.log(`Sending mock postback to: ${url}`);
 
