@@ -26,7 +26,7 @@ export async function GET(req: Request) {
         const users = await prisma.user.findMany({
             where,
             orderBy: { createdAt: 'desc' },
-            take: 50, // Limit for performance
+            take: 100, // Increased limit
             select: {
                 id: true,
                 firstName: true,
@@ -38,7 +38,10 @@ export async function GET(req: Request) {
                 availableBalance: true,
                 fraudScore: true,
                 createdAt: true,
-                lastLoginAt: true
+                lastLoginAt: true,
+                countryCode: true,
+                referralCode: true,
+                phone: true,
             }
         });
 
@@ -58,7 +61,7 @@ export async function PATCH(req: Request) {
 
         const body = await req.json();
         const { id, action, value } = body;
-        // action: 'STATUS_UPDATE' | 'BALANCE_UPDATE'
+        // action: 'STATUS_UPDATE' | 'BALANCE_UPDATE' | 'FRAUD_UPDATE' | 'ROLE_UPDATE'
 
         if (!id || !action) {
             return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
@@ -68,6 +71,28 @@ export async function PATCH(req: Request) {
             const updatedUser = await prisma.user.update({
                 where: { id },
                 data: { status: value } // 'ACTIVE', 'BANNED', 'SUSPENDED'
+            });
+            return NextResponse.json(updatedUser);
+        }
+
+        if (action === 'FRAUD_UPDATE') {
+            const score = parseInt(value);
+            if (isNaN(score)) {
+                return NextResponse.json({ error: 'Invalid score' }, { status: 400 });
+            }
+            const updatedUser = await prisma.user.update({
+                where: { id },
+                data: { fraudScore: score }
+            });
+            return NextResponse.json(updatedUser);
+        }
+
+        if (action === 'ROLE_UPDATE') {
+            // User mentioned they only want one admin, so we should be careful.
+            // But if they explicitly ask to change a role, we do it.
+            const updatedUser = await prisma.user.update({
+                where: { id },
+                data: { role: value } // 'USER', 'ADMIN'
             });
             return NextResponse.json(updatedUser);
         }
@@ -82,7 +107,11 @@ export async function PATCH(req: Request) {
             const result = await prisma.$transaction(async (tx) => {
                 const user = await tx.user.update({
                     where: { id },
-                    data: { availableBalance: { increment: amount } }
+                    data: {
+                        availableBalance: { increment: amount },
+                        // If incrementing balance, also increment total earned if it's positive?
+                        // Admin adjustments usually are for fixing errors, so maybe just balance.
+                    }
                 });
 
                 await tx.transaction.create({

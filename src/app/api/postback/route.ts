@@ -17,26 +17,16 @@ async function handlePostback(request: Request) {
     const searchParams = Object.fromEntries(url.searchParams);
     const ip = request.headers.get('x-forwarded-for') || url.hostname;
 
-    // 0. Security Token Validation
-    const siteTokenSetting = await prisma.systemSetting.findUnique({
-        where: { key: 'POSTBACK_TOKEN' }
-    });
-    const siteToken = siteTokenSetting?.value;
-    const receivedToken = searchParams.token || searchParams.key;
-
-    if (siteToken && receivedToken !== siteToken) {
-        return NextResponse.json({ error: 'Unauthorized (Invalid Token)' }, { status: 401 });
-    }
-
     // Common Postback Parameters
-    const subId = searchParams.subId || searchParams.subid || searchParams.tracking_id || searchParams.click_id;
+    const subId = searchParams.subId || searchParams.subid || searchParams.tracking_id || searchParams.click_id || searchParams.uid || searchParams.user_id;
     const payout = parseFloat(searchParams.payout || searchParams.amount || '0');
     const network = searchParams.network || 'unknown';
     const status = (searchParams.status || 'success').toUpperCase();
 
+    // 1. Log the attempt IMMEDIATELY (before any validation)
+    let postbackLog: any;
     try {
-        // 1. Log the attempt
-        const postbackLog = await prisma.postbackLog.create({
+        postbackLog = await prisma.postbackLog.create({
             data: {
                 network,
                 subId,
@@ -46,58 +36,101 @@ async function handlePostback(request: Request) {
                 ipAddress: ip,
             }
         });
+    } catch (logError) {
+        console.error('Failed to create postback log:', logError);
+    }
 
-        // 2. Validate essential data
-        if (!subId || isNaN(payout)) {
+    // 2. Security Token Validation
+    const siteTokenSetting = await prisma.systemSetting.findUnique({
+        where: { key: 'POSTBACK_TOKEN' }
+    });
+    const siteToken = siteTokenSetting?.value;
+    const receivedToken = searchParams.token || searchParams.key;
+
+    if (siteToken && receivedToken !== siteToken) {
+        if (postbackLog) {
             await prisma.postbackLog.update({
                 where: { id: postbackLog.id },
-                data: { status: 'FAILED', errorMessage: 'Missing subId or invalid payout' }
+                data: { status: 'FAILED', errorMessage: 'Unauthorized (Invalid Token)' }
             });
+        }
+        return NextResponse.json({ error: 'Unauthorized (Invalid Token)' }, { status: 401 });
+    }
+
+    try {
+        // 3. Validate essential data
+        if (!subId || isNaN(payout)) {
+            if (postbackLog) {
+                await prisma.postbackLog.update({
+                    where: { id: postbackLog.id },
+                    data: { status: 'FAILED', errorMessage: 'Missing subId or invalid payout' }
+                });
+            }
             return NextResponse.json({ error: 'Missing subId or payout' }, { status: 400 });
         }
 
-        // 3. Find the tracking record
+        // 4. Find the tracking record (or user directly)
+        let userId = '';
+        let rewardAmount = payout * 0.4;
+        let rewardPoints = Math.floor(rewardAmount * 100);
+        let description = `Reward: Completion from ${network}`;
+        let offerId = null;
+
         const userOffer = await prisma.userOffer.findUnique({
             where: { id: subId },
             include: { offer: true, user: true }
         });
 
-        if (!userOffer) {
-            await prisma.postbackLog.update({
-                where: { id: postbackLog.id },
-                data: { status: 'FAILED', errorMessage: 'UserOffer not found' }
+        if (userOffer) {
+            if (userOffer.status === 'APPROVED') {
+                if (postbackLog) {
+                    await prisma.postbackLog.update({
+                        where: { id: postbackLog.id },
+                        data: { status: 'FAILED', errorMessage: 'Offer already approved' }
+                    });
+                }
+                return NextResponse.json({ message: 'OK (duplicate)' });
+            }
+            userId = userOffer.userId;
+            rewardAmount = userOffer.offer.userReward ? Number(userOffer.offer.userReward) : (payout * 0.4);
+            rewardPoints = userOffer.offer.rewardPoints || Math.floor(rewardAmount * 100);
+            description = `Reward: Completion of ${userOffer.offer.title} (${network})`;
+            offerId = userOffer.offerId;
+        } else {
+            // Fallback: Check if subId is a User ID (common for some offer walls)
+            const user = await prisma.user.findUnique({
+                where: { id: subId }
             });
-            return NextResponse.json({ error: 'Invalid tracking ID' }, { status: 404 });
-        }
 
-        if (userOffer.status === 'APPROVED') {
-            await prisma.postbackLog.update({
-                where: { id: postbackLog.id },
-                data: { status: 'FAILED', errorMessage: 'Offer already approved' }
-            });
-            return NextResponse.json({ message: 'OK (duplicate)' });
+            if (!user) {
+                if (postbackLog) {
+                    await prisma.postbackLog.update({
+                        where: { id: postbackLog.id },
+                        data: { status: 'FAILED', errorMessage: 'Tracking ID (or User ID) not found' }
+                    });
+                }
+                return NextResponse.json({ error: 'Invalid tracking ID' }, { status: 404 });
+            }
+            userId = user.id;
         }
-
-        // 4. Calculate User Reward (Admin share logic)
-        // If the postback payout is provided, we use it. Otherwise we use the offer's default reward.
-        const rewardAmount = userOffer.offer.userReward ? Number(userOffer.offer.userReward) : (payout * 0.4);
-        const rewardPoints = userOffer.offer.rewardPoints || Math.floor(rewardAmount * 100);
 
         // 5. Transaction: Update everything
         await prisma.$transaction(async (tx) => {
-            // Update UserOffer
-            await tx.userOffer.update({
-                where: { id: subId },
-                data: {
-                    status: 'APPROVED',
-                    completedAt: new Date(),
-                    rewardPoints: rewardPoints,
-                }
-            });
+            if (userOffer) {
+                // Update UserOffer
+                await tx.userOffer.update({
+                    where: { id: subId },
+                    data: {
+                        status: 'APPROVED',
+                        completedAt: new Date(),
+                        rewardPoints: rewardPoints,
+                    }
+                });
+            }
 
             // Update User Balance
             await tx.user.update({
-                where: { id: userOffer.userId },
+                where: { id: userId },
                 data: {
                     availableBalance: { increment: rewardAmount },
                     totalEarned: { increment: rewardAmount },
@@ -107,31 +140,39 @@ async function handlePostback(request: Request) {
             // Log Transaction
             await tx.transaction.create({
                 data: {
-                    userId: userOffer.userId,
+                    userId: userId,
                     type: 'EARN',
                     amount: rewardAmount,
                     points: rewardPoints,
-                    description: `Reward: Completion of ${userOffer.offer.title} (${network})`,
+                    description: description,
                     status: 'COMPLETED',
-                    offerId: userOffer.offerId,
+                    offerId: offerId,
                 }
             });
 
             // Update Postback Log
-            await tx.postbackLog.update({
-                where: { id: postbackLog.id },
-                data: {
-                    status: 'SUCCESS',
-                    userId: userOffer.userId,
-                    amount: rewardAmount,
-                }
-            });
+            if (postbackLog) {
+                await tx.postbackLog.update({
+                    where: { id: postbackLog.id },
+                    data: {
+                        status: 'SUCCESS',
+                        userId: userId,
+                        amount: rewardAmount,
+                    }
+                });
+            }
         });
 
         return NextResponse.json({ success: true, message: 'Reward processed' });
 
     } catch (error: any) {
         console.error('Postback Error:', error);
+        if (postbackLog) {
+            await prisma.postbackLog.update({
+                where: { id: postbackLog.id },
+                data: { status: 'FAILED', errorMessage: error.message || 'Internal Server Error' }
+            });
+        }
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
