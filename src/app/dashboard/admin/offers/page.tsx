@@ -40,7 +40,7 @@ export default function AdminOffersPage() {
         } else if (status === 'unauthenticated') {
             router.push('/login');
         }
-    }, [status, session]);
+    }, [status, session, router]);
 
     const handleToggleStatus = async (id: string, currentStatus: boolean) => {
         try {
