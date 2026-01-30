@@ -1,20 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BackgroundParticles } from '@/components/BackgroundParticles';
 
 export default function LoginPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const message = searchParams.get('message');
+        const errorParam = searchParams.get('error');
+        if (message) setSuccess(message);
+        if (errorParam) setError(errorParam);
+    }, [searchParams]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -68,8 +77,14 @@ export default function LoginPage() {
                 </div>
 
                 {error && (
-                    <div className="bg-red-500/20 border border-red-500 text-red-200 px-4 py-3 rounded-lg mb-4">
+                    <div className="bg-red-500/20 border border-red-500 text-red-700 px-4 py-3 rounded-lg mb-4 text-center font-bold">
                         {error}
+                    </div>
+                )}
+
+                {success && (
+                    <div className="bg-emerald-500/20 border border-emerald-500 text-emerald-700 px-4 py-3 rounded-lg mb-4 text-center font-bold">
+                        {success}
                     </div>
                 )}
 

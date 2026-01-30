@@ -17,6 +17,7 @@ export default function RegisterPage() {
         countryCode: '',
     });
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -35,8 +36,10 @@ export default function RegisterPage() {
 
             if (response.ok) {
                 // Show success message and redirect to login
-                alert(data.message || 'Registration successful!');
-                router.push('/login');
+                setSuccess(data.message || 'Registration successful!');
+                setTimeout(() => {
+                    router.push(`/login?message=${encodeURIComponent(data.message || 'Registration successful! Please log in.')}`);
+                }, 2000);
             } else {
                 setError(data.error || 'Registration failed');
             }
@@ -67,8 +70,14 @@ export default function RegisterPage() {
                 </div>
 
                 {error && (
-                    <div className="bg-red-500/20 border border-red-500 text-red-200 px-4 py-3 rounded-lg mb-4">
+                    <div className="bg-red-500/20 border border-red-500 text-red-700 px-4 py-3 rounded-lg mb-4 text-center font-bold">
                         {error}
+                    </div>
+                )}
+
+                {success && (
+                    <div className="bg-emerald-500/20 border border-emerald-500 text-emerald-700 px-4 py-3 rounded-lg mb-4 text-center font-bold">
+                        {success}
                     </div>
                 )}
 
