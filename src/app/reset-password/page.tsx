@@ -69,7 +69,7 @@ function ResetPasswordContent() {
                 <div className="bg-white/90 border border-green-100 shadow-xl max-w-md w-full p-8 rounded-2xl relative z-10 text-center">
                     <h1 className="text-2xl font-bold text-red-600 mb-4">Invalid Reset Link</h1>
                     <p className="text-slate-600 mb-6">This link is invalid or has expired.</p>
-                    <Link href="/forgot-password" size="sm" className="bg-green-600 text-white px-6 py-2 rounded-lg font-bold">
+                    <Link href="/forgot-password" className="bg-green-600 text-white px-6 py-2 rounded-lg font-bold">
                         Request New Link
                     </Link>
                 </div>
