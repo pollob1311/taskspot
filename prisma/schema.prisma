@@ -77,6 +77,8 @@ model User {
   deviceFingerprint String?
   referralCode      String?        @unique
   referredById      String?
+  resetToken        String?        @unique
+  resetTokenExpiry  DateTime?
   createdAt         DateTime       @default(now())
   lastLoginAt       DateTime?
   
