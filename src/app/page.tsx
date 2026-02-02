@@ -40,9 +40,12 @@ export default function HomePage() {
                                                 <input type="password" placeholder="••••••••" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900" />
                                             </div>
                                         </div>
-                                        <a href="/login" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="block w-full text-center bg-indigo-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95">
+                                        <button
+                                            type="submit"
+                                            className="block w-full text-center bg-indigo-600 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all active:scale-95"
+                                        >
                                             Sign In
-                                        </a>
+                                        </button>
                                         <div className="text-center pt-2">
                                             <a href="/register" style={{ position: 'relative', zIndex: 999999, cursor: 'pointer' }} className="text-sm font-bold text-indigo-600 hover:underline">Create Account →</a>
                                         </div>

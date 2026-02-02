@@ -22,8 +22,37 @@ function LoginContent() {
         const message = searchParams.get('message');
         const errorParam = searchParams.get('error');
         if (message) setSuccess(message);
-        if (errorParam) setError(errorParam);
+        if (errorParam) {
+            setError(getErrorMessage(errorParam));
+        }
     }, [searchParams]);
+
+    const getErrorMessage = (error: string) => {
+        switch (error) {
+            case 'OAuthSignin':
+                return 'Error starting the Google or Outlook login. Please check your credentials.';
+            case 'OAuthCallback':
+                return 'Error during the login callback. Please try again.';
+            case 'OAuthCreateAccount':
+                return 'Could not create a user with that account. Please try another method.';
+            case 'EmailCreateAccount':
+                return 'Could not create a user with that email.';
+            case 'Callback':
+                return 'Error during the authentication process.';
+            case 'OAuthAccountNotLinked':
+                return 'That email is already linked to another login method.';
+            case 'EmailSignin':
+                return 'Check your email for the sign-in link.';
+            case 'CredentialsSignin':
+                return 'Invalid email or password.';
+            case 'SessionRequired':
+                return 'Please sign in to access this page.';
+            case 'Default':
+                return 'An unexpected error occurred. Please try again.';
+            default:
+                return error;
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -38,7 +67,7 @@ function LoginContent() {
             });
 
             if (result?.error) {
-                setError(result.error);
+                setError(getErrorMessage(result.error));
             } else {
                 router.push('/dashboard');
             }

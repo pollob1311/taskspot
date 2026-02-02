@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
+import crypto from 'crypto';
+import { sendVerificationEmail } from '@/lib/mail';
 
 const registerSchema = z.object({
     email: z.string().email('Invalid email address'),
@@ -36,6 +38,9 @@ export async function POST(request: Request) {
         // Generate referral code
         const referralCode = `REF${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
 
+        // Generate verification token
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+
         // Create user
         const user = await prisma.user.create({
             data: {
@@ -45,7 +50,8 @@ export async function POST(request: Request) {
                 lastName: validatedData.lastName,
                 countryCode: validatedData.countryCode,
                 referralCode,
-                emailVerified: false, // Will verify via email
+                emailVerified: false,
+                verificationToken,
             },
         });
 
@@ -69,8 +75,14 @@ export async function POST(request: Request) {
             },
         });
 
-        // TODO: Send verification email
-        // await sendVerificationEmail(user.email, user.id);
+        // Send verification email
+        try {
+            await sendVerificationEmail(user.email, verificationToken);
+        } catch (mailError) {
+            console.error('Failed to send verification email:', mailError);
+            // We don't want to fail registration if email fails, 
+            // but in a real app you'd want to handle this better
+        }
 
         return NextResponse.json({
             success: true,

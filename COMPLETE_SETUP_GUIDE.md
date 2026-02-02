@@ -9,6 +9,7 @@ This guide will walk you through the entire process of hosting your TaskSpot pla
 4. [Step 3: Deploy to Vercel (Hosting)](#step-3-deploy-to-vercel)
 5. [Step 4: Push Database Schema](#step-4-push-database-schema)
 6. [Step 5: Connect Namecheap Domain](#step-5-connect-namecheap-domain)
+7. [Step 6: Setup Google & Outlook Login (Optional)](#step-6-setup-google--outlook-login)
 
 ---
 
@@ -84,6 +85,13 @@ Even though the code is deployed, your database is currently empty (no tables).
 
 ## ✅ You're All Set!
 Once Vercel finishes the build and DNS propagates, your site will be live at `taskspot.site`.
+
+---
+
+## Step 6: Setup Google & Outlook Login
+To enable traditional "Login with Google" or "Outlook" buttons:
+1. Follow the [OAUTH_SETUP_GUIDE.md](file:///d:/all/website/cpa%20mm/OAUTH_SETUP_GUIDE.md).
+2. Add the generated keys to your `.env` file and Vercel environment variables.
 
 ### 👨‍💻 Admin Setup
 1. Register a new account on your site.
